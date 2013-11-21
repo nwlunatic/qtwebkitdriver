@@ -105,7 +105,7 @@ class ChromeDriver(object):
         Command.NEW_SESSION, params)['sessionId']
 
   def _WrapValue(self, value):
-    """Wrap value from client side for chromedriver side."""
+    """Wrap value from client side for qtwebkitdriver side."""
     if isinstance(value, dict):
       converted = {}
       for key, val in value.items():
@@ -119,7 +119,7 @@ class ChromeDriver(object):
       return value
 
   def _UnwrapValue(self, value):
-    """Unwrap value from chromedriver side for client side."""
+    """Unwrap value from qtwebkitdriver side for client side."""
     if isinstance(value, dict):
       if (len(value) == 1 and 'ELEMENT' in value
           and isinstance(value['ELEMENT'], basestring)):

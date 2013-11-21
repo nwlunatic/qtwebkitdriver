@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/chromedriver/net/url_request_context_getter.h"
+#include "chrome/test/qtwebkitdriver/net/url_request_context_getter.h"
 
 #include <string>
 
@@ -37,7 +37,7 @@ net::URLRequestContext* URLRequestContextGetter::GetURLRequestContext() {
   if (!url_request_context_) {
     net::URLRequestContextBuilder builder;
     // net::HttpServer fails to parse headers if user-agent header is blank.
-    builder.set_user_agent("chromedriver");
+    builder.set_user_agent("qtwebkitdriver");
     builder.DisableHttpCache();
 #if defined(OS_LINUX) || defined(OS_ANDROID)
     builder.set_proxy_config_service(new ProxyConfigServiceDirect());

@@ -6,9 +6,9 @@
 
 #include "base/json/json_reader.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/frame_tracker.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/stub_devtools_client.h"
+#include "chrome/test/qtwebkitdriver/chrome/frame_tracker.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/stub_devtools_client.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 TEST(FrameTracker, GetContextIdForFrame) {

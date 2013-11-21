@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_SERVER_HTTP_HANDLER_H_
-#define CHROME_TEST_CHROMEDRIVER_SERVER_HTTP_HANDLER_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_SERVER_HTTP_HANDLER_H_
+#define CHROME_TEST_QTWEBKITDRIVER_SERVER_HTTP_HANDLER_H_
 
 #include <string>
 #include <vector>
@@ -15,13 +15,13 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
-#include "chrome/test/chromedriver/command.h"
-#include "chrome/test/chromedriver/commands.h"
-#include "chrome/test/chromedriver/element_commands.h"
-#include "chrome/test/chromedriver/net/sync_websocket_factory.h"
-#include "chrome/test/chromedriver/session_commands.h"
-#include "chrome/test/chromedriver/session_thread_map.h"
-#include "chrome/test/chromedriver/window_commands.h"
+#include "chrome/test/qtwebkitdriver/command.h"
+#include "chrome/test/qtwebkitdriver/commands.h"
+#include "chrome/test/qtwebkitdriver/element_commands.h"
+#include "chrome/test/qtwebkitdriver/net/sync_websocket_factory.h"
+#include "chrome/test/qtwebkitdriver/session_commands.h"
+#include "chrome/test/qtwebkitdriver/session_thread_map.h"
+#include "chrome/test/qtwebkitdriver/window_commands.h"
 
 namespace base {
 class DictionaryValue;
@@ -129,4 +129,4 @@ bool MatchesCommand(const std::string& method,
 
 }  // namespace internal
 
-#endif  // CHROME_TEST_CHROMEDRIVER_SERVER_HTTP_HANDLER_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_SERVER_HTTP_HANDLER_H_

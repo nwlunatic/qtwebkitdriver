@@ -2,18 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/chromedriver/session.h"
+#include "chrome/test/qtwebkitdriver/session.h"
 
 #include <list>
 
 #include "base/lazy_instance.h"
 #include "base/threading/thread_local.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/chrome.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/version.h"
-#include "chrome/test/chromedriver/chrome/web_view.h"
-#include "chrome/test/chromedriver/logging.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/version.h"
+#include "chrome/test/qtwebkitdriver/chrome/web_view.h"
+#include "chrome/test/qtwebkitdriver/logging.h"
 
 namespace {
 
@@ -24,10 +24,10 @@ base::LazyInstance<base::ThreadLocalPointer<Session> >
 
 FrameInfo::FrameInfo(const std::string& parent_frame_id,
                      const std::string& frame_id,
-                     const std::string& chromedriver_frame_id)
+                     const std::string& qtwebkitdriver_frame_id)
     : parent_frame_id(parent_frame_id),
       frame_id(frame_id),
-      chromedriver_frame_id(chromedriver_frame_id) {}
+      qtwebkitdriver_frame_id(qtwebkitdriver_frame_id) {}
 
 const base::TimeDelta Session::kDefaultPageLoadTimeout =
     base::TimeDelta::FromMinutes(5);
@@ -68,11 +68,11 @@ void Session::SwitchToTopFrame() {
 }
 
 void Session::SwitchToSubFrame(const std::string& frame_id,
-                               const std::string& chromedriver_frame_id) {
+                               const std::string& qtwebkitdriver_frame_id) {
   std::string parent_frame_id;
   if (!frames.empty())
     parent_frame_id = frames.back().frame_id;
-  frames.push_back(FrameInfo(parent_frame_id, frame_id, chromedriver_frame_id));
+  frames.push_back(FrameInfo(parent_frame_id, frame_id, qtwebkitdriver_frame_id));
 }
 
 std::string Session::GetCurrentFrameId() const {

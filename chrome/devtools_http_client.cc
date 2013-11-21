@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/chromedriver/chrome/devtools_http_client.h"
+#include "chrome/test/qtwebkitdriver/chrome/devtools_http_client.h"
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -13,13 +13,13 @@
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/devtools_client_impl.h"
-#include "chrome/test/chromedriver/chrome/log.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/version.h"
-#include "chrome/test/chromedriver/chrome/web_view_impl.h"
-#include "chrome/test/chromedriver/net/net_util.h"
-#include "chrome/test/chromedriver/net/url_request_context_getter.h"
+#include "chrome/test/qtwebkitdriver/chrome/devtools_client_impl.h"
+#include "chrome/test/qtwebkitdriver/chrome/log.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/version.h"
+#include "chrome/test/qtwebkitdriver/chrome/web_view_impl.h"
+#include "chrome/test/qtwebkitdriver/net/net_util.h"
+#include "chrome/test/qtwebkitdriver/net/url_request_context_getter.h"
 
 #include <iostream>
 
@@ -153,17 +153,6 @@ Status DevToolsHttpClient::Init(const base::TimeDelta& timeout) {
   return Status(kOk);
 }
 
-Status DevToolsHttpClient::GetWebViewsInfo(WebViewsInfo* views_info) {
-  return DevToolsHttpClient::GetQtWebKitWebViewsInfo(views_info);
-  /*
-  std::string data;
-  if (!FetchUrlAndLog(server_url_ + "/json", context_getter_.get(), &data))
-    return Status(kChromeNotReachable);
-
-  return internal::ParseWebViewsInfo(data, views_info);
-  */
-}
-
 Status DevToolsHttpClient::GetQtWebKitWebViewsInfo(WebViewsInfo* views_info) {
     std::cout << "*** entering GetQtWebKitWebViewsInfo" << std::endl;
   std::string data;
@@ -181,6 +170,17 @@ Status DevToolsHttpClient::GetQtWebKitWebViewsInfo(WebViewsInfo* views_info) {
   Status status = internal::ParseWebViewsInfo(data, views_info);
   std::cout << status.message() << std::endl;
   return status;
+}
+
+Status DevToolsHttpClient::GetWebViewsInfo(WebViewsInfo* views_info) {
+  // return DevToolsHttpClient::GetQtWebKitWebViewsInfo(views_info);
+  
+  std::string data;
+  if (!FetchUrlAndLog(server_url_ + "/json", context_getter_.get(), &data))
+    return Status(kChromeNotReachable);
+
+  return internal::ParseWebViewsInfo(data, views_info);
+  
 }
 
 scoped_ptr<DevToolsClient> DevToolsHttpClient::CreateClient(

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_KEYCODE_TEXT_CONVERSION_H_
-#define CHROME_TEST_CHROMEDRIVER_KEYCODE_TEXT_CONVERSION_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_KEYCODE_TEXT_CONVERSION_H_
+#define CHROME_TEST_QTWEBKITDRIVER_KEYCODE_TEXT_CONVERSION_H_
 
 #include <string>
 
@@ -32,4 +32,4 @@ bool ConvertCharToKeyCode(char16 key,
                           int *necessary_modifiers,
                           std::string* error_msg);
 
-#endif  // CHROME_TEST_CHROMEDRIVER_KEYCODE_TEXT_CONVERSION_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_KEYCODE_TEXT_CONVERSION_H_

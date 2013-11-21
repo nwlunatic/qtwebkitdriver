@@ -3,7 +3,7 @@ include_rules = [
   "-chrome",
   "-content",
 
-  "+chrome/test/chromedriver",
+  "+chrome/test/qtwebkitdriver",
 
   "+third_party/webdriver",
   "+third_party/zlib",

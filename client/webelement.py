@@ -7,15 +7,15 @@ from command_executor import Command
 
 class WebElement(object):
   """Represents an HTML element."""
-  def __init__(self, chromedriver, id_):
-    self._chromedriver = chromedriver
+  def __init__(self, qtwebkitdriver, id_):
+    self._qtwebkitdriver = qtwebkitdriver
     self._id = id_
 
   def _Execute(self, command, params=None):
     if params is None:
       params = {}
     params['id'] = self._id;
-    return self._chromedriver.ExecuteCommand(command, params)
+    return self._qtwebkitdriver.ExecuteCommand(command, params)
 
   def FindElement(self, strategy, target):
     return self._Execute(

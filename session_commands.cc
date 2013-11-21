@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/chromedriver/session_commands.h"
+#include "chrome/test/qtwebkitdriver/session_commands.h"
 
 #include <list>
 
@@ -15,23 +15,23 @@
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/basic_types.h"
-#include "chrome/test/chromedriver/capabilities.h"
-#include "chrome/test/chromedriver/chrome/automation_extension.h"
-#include "chrome/test/chromedriver/chrome/chrome.h"
-#include "chrome/test/chromedriver/chrome/chrome_android_impl.h"
-#include "chrome/test/chromedriver/chrome/chrome_desktop_impl.h"
-#include "chrome/test/chromedriver/chrome/device_manager.h"
-#include "chrome/test/chromedriver/chrome/devtools_event_listener.h"
-#include "chrome/test/chromedriver/chrome/geoposition.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/web_view.h"
-#include "chrome/test/chromedriver/chrome_launcher.h"
-#include "chrome/test/chromedriver/logging.h"
-#include "chrome/test/chromedriver/net/url_request_context_getter.h"
-#include "chrome/test/chromedriver/session.h"
-#include "chrome/test/chromedriver/util.h"
-#include "chrome/test/chromedriver/version.h"
+#include "chrome/test/qtwebkitdriver/basic_types.h"
+#include "chrome/test/qtwebkitdriver/capabilities.h"
+#include "chrome/test/qtwebkitdriver/chrome/automation_extension.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome_android_impl.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome_desktop_impl.h"
+#include "chrome/test/qtwebkitdriver/chrome/device_manager.h"
+#include "chrome/test/qtwebkitdriver/chrome/devtools_event_listener.h"
+#include "chrome/test/qtwebkitdriver/chrome/geoposition.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/web_view.h"
+#include "chrome/test/qtwebkitdriver/chrome_launcher.h"
+#include "chrome/test/qtwebkitdriver/logging.h"
+#include "chrome/test/qtwebkitdriver/net/url_request_context_getter.h"
+#include "chrome/test/qtwebkitdriver/session.h"
+#include "chrome/test/qtwebkitdriver/util.h"
+#include "chrome/test/qtwebkitdriver/version.h"
 
 namespace {
 
@@ -72,7 +72,7 @@ scoped_ptr<base::DictionaryValue> CreateCapabilities(Chrome* chrome) {
   scoped_ptr<base::DictionaryValue> caps(new base::DictionaryValue());
   caps->SetString("browserName", "chrome");
   caps->SetString("version", chrome->GetVersion());
-  caps->SetString("chrome.chromedriverVersion", kChromeDriverVersion);
+  caps->SetString("chrome.qtwebkitdriverVersion", kChromeDriverVersion);
   caps->SetString("platform", chrome->GetOperatingSystemName());
   caps->SetBoolean("javascriptEnabled", true);
   caps->SetBoolean("takesScreenshot", true);
@@ -413,7 +413,7 @@ Status ExecuteGetLocation(
   location.SetDouble("longitude", session->overridden_geoposition->longitude);
   location.SetDouble("accuracy", session->overridden_geoposition->accuracy);
   // Set a dummy altitude to make WebDriver clients happy.
-  // https://code.google.com/p/chromedriver/issues/detail?id=281
+  // https://code.google.com/p/qtwebkitdriver/issues/detail?id=281
   location.SetDouble("altitude", 0);
   value->reset(location.DeepCopy());
   return Status(kOk);

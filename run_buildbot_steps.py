@@ -26,10 +26,10 @@ import chrome_paths
 import util
 
 _THIS_DIR = os.path.abspath(os.path.dirname(__file__))
-GS_CHROMEDRIVER_BUCKET = 'gs://chromedriver'
-GS_CHROMEDRIVER_DATA_BUCKET = 'gs://chromedriver-data'
-GS_CONTINUOUS_URL = GS_CHROMEDRIVER_DATA_BUCKET + '/continuous'
-GS_PREBUILTS_URL = GS_CHROMEDRIVER_DATA_BUCKET + '/prebuilts'
+GS_QTWEBKITDRIVER_BUCKET = 'gs://qtwebkitdriver'
+GS_QTWEBKITDRIVER_DATA_BUCKET = 'gs://qtwebkitdriver-data'
+GS_CONTINUOUS_URL = GS_QTWEBKITDRIVER_DATA_BUCKET + '/continuous'
+GS_PREBUILTS_URL = GS_QTWEBKITDRIVER_DATA_BUCKET + '/prebuilts'
 TEST_LOG_FORMAT = '%s_log.json'
 
 SCRIPT_DIR = os.path.join(_THIS_DIR, os.pardir, os.pardir, os.pardir, os.pardir,
@@ -46,8 +46,8 @@ from slave import slave_utils
 def _ArchivePrebuilts(revision):
   """Uploads the prebuilts to google storage."""
   util.MarkBuildStepStart('archive prebuilts')
-  zip_path = util.Zip(os.path.join(chrome_paths.GetBuildDir(['chromedriver']),
-                                   'chromedriver'))
+  zip_path = util.Zip(os.path.join(chrome_paths.GetBuildDir(['qtwebkitdriver']),
+                                   'qtwebkitdriver'))
   if slave_utils.GSUtilCopy(
       zip_path,
       '%s/%s' % (GS_PREBUILTS_URL, 'r%s.zip' % revision)):
@@ -56,7 +56,7 @@ def _ArchivePrebuilts(revision):
 
 def _DownloadPrebuilts():
   """Downloads the most recent prebuilts from google storage."""
-  util.MarkBuildStepStart('Download latest chromedriver')
+  util.MarkBuildStepStart('Download latest qtwebkitdriver')
 
   zip_path = os.path.join(util.MakeTempDir(), 'build.zip')
   if gsutil_download.DownloadLatestFile(GS_PREBUILTS_URL, 'r', zip_path):
@@ -75,7 +75,7 @@ def _GetTestResultsLog(platform):
   temp_log = tempfile.mkstemp()[1]
   log_name = TEST_LOG_FORMAT % platform
   result = slave_utils.GSUtilDownloadFile(
-      '%s/%s' % (GS_CHROMEDRIVER_DATA_BUCKET, log_name), temp_log)
+      '%s/%s' % (GS_QTWEBKITDRIVER_DATA_BUCKET, log_name), temp_log)
   if result:
     return {}
   with open(temp_log, 'rb') as log_file:
@@ -91,7 +91,7 @@ def _PutTestResultsLog(platform, test_results_log):
   log_path = os.path.join(temp_dir, log_name)
   with open(log_path, 'wb') as log_file:
     json.dump(test_results_log, log_file)
-  if slave_utils.GSUtilCopyFile(log_path, GS_CHROMEDRIVER_DATA_BUCKET):
+  if slave_utils.GSUtilCopyFile(log_path, GS_QTWEBKITDRIVER_DATA_BUCKET):
     raise Exception('Failed to upload test results log to google storage')
 
 
@@ -113,7 +113,7 @@ def _UpdateTestResultsLog(platform, revision, passed):
 
 
 def _GetVersion():
-  """Get the current chromedriver version."""
+  """Get the current qtwebkitdriver version."""
   with open(os.path.join(_THIS_DIR, 'VERSION'), 'r') as f:
     return f.read().strip()
 
@@ -172,13 +172,13 @@ def _ArchiveGoodBuild(platform, revision):
   assert platform != 'android'
   util.MarkBuildStepStart('archive build')
 
-  server_name = 'chromedriver'
+  server_name = 'qtwebkitdriver'
   if util.IsWindows():
     server_name += '.exe'
   zip_path = util.Zip(os.path.join(chrome_paths.GetBuildDir([server_name]),
                                    server_name))
 
-  build_url = '%s/chromedriver_%s_%s.%s.zip' % (
+  build_url = '%s/qtwebkitdriver_%s_%s.%s.zip' % (
       GS_CONTINUOUS_URL, platform, _GetVersion(), revision)
   if slave_utils.GSUtilCopy(zip_path, build_url):
     util.MarkBuildStepError()
@@ -190,8 +190,8 @@ def _MaybeRelease(platform):
 
   # Check if the current version has already been released.
   result, _ = slave_utils.GSUtilListBucket(
-      '%s/%s/chromedriver_%s*' % (
-          GS_CHROMEDRIVER_BUCKET, _GetVersion(), platform),
+      '%s/%s/qtwebkitdriver_%s*' % (
+          GS_QTWEBKITDRIVER_BUCKET, _GetVersion(), platform),
       [])
   if result == 0:
     return
@@ -201,7 +201,7 @@ def _MaybeRelease(platform):
 
   # Fetch release candidates.
   result, output = slave_utils.GSUtilListBucket(
-      '%s/chromedriver_%s_%s*' % (
+      '%s/qtwebkitdriver_%s_%s*' % (
           GS_CONTINUOUS_URL, platform, _GetVersion()),
       [])
   assert result == 0 and output, 'No release candidates found'
@@ -223,10 +223,10 @@ def _MaybeRelease(platform):
 
 def _Release(build, platform):
   """Releases the given candidate build."""
-  release_name = 'chromedriver_%s.zip' % platform
+  release_name = 'qtwebkitdriver_%s.zip' % platform
   util.MarkBuildStepStart('releasing %s' % release_name)
   slave_utils.GSUtilCopy(
-      build, '%s/%s/%s' % (GS_CHROMEDRIVER_BUCKET, _GetVersion(), release_name))
+      build, '%s/%s/%s' % (GS_QTWEBKITDRIVER_BUCKET, _GetVersion(), release_name))
 
   _MaybeUploadReleaseNotes()
 
@@ -236,18 +236,18 @@ def _MaybeUploadReleaseNotes():
   # Check if the current version has already been released.
   version = _GetVersion()
   notes_name = 'notes.txt'
-  notes_url = '%s/%s/%s' % (GS_CHROMEDRIVER_BUCKET, version, notes_name)
+  notes_url = '%s/%s/%s' % (GS_QTWEBKITDRIVER_BUCKET, version, notes_name)
   prev_version = '.'.join([version.split('.')[0],
                           str(int(version.split('.')[1]) - 1)])
   prev_notes_url = '%s/%s/%s' % (
-      GS_CHROMEDRIVER_BUCKET, prev_version, notes_name)
+      GS_QTWEBKITDRIVER_BUCKET, prev_version, notes_name)
 
   result, _ = slave_utils.GSUtilListBucket(notes_url, [])
   if result == 0:
     return
 
   fixed_issues = []
-  query = ('https://code.google.com/p/chromedriver/issues/csv?'
+  query = ('https://code.google.com/p/qtwebkitdriver/issues/csv?'
            'q=status%3AToBeReleased&colspec=ID%20Summary')
   issues = StringIO.StringIO(urllib2.urlopen(query).read().split('\n', 1)[1])
   for issue in csv.reader(issues):

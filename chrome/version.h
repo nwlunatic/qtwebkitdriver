@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_VERSION_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_VERSION_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_VERSION_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_VERSION_H_
 
 #include <string>
 
@@ -11,4 +11,4 @@ extern const int kMinimumSupportedChromeBuildNo;
 
 std::string GetMinimumSupportedChromeVersion();
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_VERSION_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_VERSION_H_

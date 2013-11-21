@@ -2,11 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/chromedriver/chrome/javascript_dialog_manager.h"
+#include "chrome/test/qtwebkitdriver/chrome/javascript_dialog_manager.h"
 
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/devtools_client.h"
-#include "chrome/test/chromedriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/devtools_client.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
 
 JavaScriptDialogManager::JavaScriptDialogManager(DevToolsClient* client)
     : client_(client) {

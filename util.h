@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_UTIL_H_
-#define CHROME_TEST_CHROMEDRIVER_UTIL_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_UTIL_H_
+#define CHROME_TEST_QTWEBKITDRIVER_UTIL_H_
 
 #include <string>
 
@@ -39,4 +39,4 @@ Status UnzipSoleFile(const base::FilePath& unzip_dir,
                      const std::string& bytes,
                      base::FilePath* file);
 
-#endif  // CHROME_TEST_CHROMEDRIVER_UTIL_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_UTIL_H_

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_NET_URL_REQUEST_CONTEXT_GETTER_H_
-#define CHROME_TEST_CHROMEDRIVER_NET_URL_REQUEST_CONTEXT_GETTER_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_NET_URL_REQUEST_CONTEXT_GETTER_H_
+#define CHROME_TEST_QTWEBKITDRIVER_NET_URL_REQUEST_CONTEXT_GETTER_H_
 
 #include "base/basictypes.h"
 #include "base/compiler_specific.h"
@@ -40,4 +40,4 @@ class URLRequestContextGetter : public net::URLRequestContextGetter {
   DISALLOW_COPY_AND_ASSIGN(URLRequestContextGetter);
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_NET_URL_REQUEST_CONTEXT_GETTER_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_NET_URL_REQUEST_CONTEXT_GETTER_H_

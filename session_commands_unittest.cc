@@ -14,11 +14,11 @@
 #include "base/run_loop.h"
 #include "base/threading/thread.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/stub_chrome.h"
-#include "chrome/test/chromedriver/commands.h"
-#include "chrome/test/chromedriver/session.h"
-#include "chrome/test/chromedriver/session_commands.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/stub_chrome.h"
+#include "chrome/test/qtwebkitdriver/commands.h"
+#include "chrome/test/qtwebkitdriver/session.h"
+#include "chrome/test/qtwebkitdriver/session_commands.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 TEST(SessionCommandTest, FileUpload) {

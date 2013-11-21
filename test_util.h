@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_TEST_UTIL_H_
-#define CHROME_TEST_CHROMEDRIVER_TEST_UTIL_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_TEST_UTIL_H_
+#define CHROME_TEST_QTWEBKITDRIVER_TEST_UTIL_H_
 
 #include <string>
 
@@ -48,4 +48,4 @@ bool SwitchKeyboardLayout(const std::string& input_locale_identifier);
 bool SwitchKeyboardLayout(const std::string& input_source_id);
 #endif  // defined(OS_MACOSX)
 
-#endif  // CHROME_TEST_CHROMEDRIVER_TEST_UTIL_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_TEST_UTIL_H_

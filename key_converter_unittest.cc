@@ -7,10 +7,10 @@
 
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/ui_events.h"
-#include "chrome/test/chromedriver/key_converter.h"
-#include "chrome/test/chromedriver/test_util.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/ui_events.h"
+#include "chrome/test/qtwebkitdriver/key_converter.h"
+#include "chrome/test/qtwebkitdriver/test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
@@ -237,7 +237,7 @@ TEST(KeyConverter, ToggleModifiers) {
 }
 
 #if defined(OS_WIN)
-// https://code.google.com/p/chromedriver/issues/detail?id=546
+// https://code.google.com/p/qtwebkitdriver/issues/detail?id=546
 #define MAYBE_AllShorthandKeys DISABLED_AllShorthandKeys
 #else
 #define MAYBE_AllShorthandKeys AllShorthandKeys
@@ -321,8 +321,8 @@ TEST(KeyConverter, AllEnglishKeyboardTextChars) {
 }
 
 #if defined(OS_LINUX) || defined(OS_WIN)
-// https://code.google.com/p/chromedriver/issues/detail?id=240
-// https://code.google.com/p/chromedriver/issues/detail?id=546
+// https://code.google.com/p/qtwebkitdriver/issues/detail?id=240
+// https://code.google.com/p/qtwebkitdriver/issues/detail?id=546
 #define MAYBE_AllSpecialWebDriverKeysOnEnglishKeyboard \
     DISABLED_AllSpecialWebDriverKeysOnEnglishKeyboard
 #else

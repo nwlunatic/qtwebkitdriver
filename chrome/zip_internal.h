@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_ZIP_INTERNAL_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_ZIP_INTERNAL_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_ZIP_INTERNAL_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_ZIP_INTERNAL_H_
 
 #if defined(OS_WIN)
 #include <windows.h>
@@ -59,4 +59,4 @@ const int kZipBufSize = 8192;
 }  // namespace internal
 }  // namespace zip
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_ZIP_INTERNAL_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_ZIP_INTERNAL_H_

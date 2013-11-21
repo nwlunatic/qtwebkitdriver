@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_BASIC_TYPES_H_
-#define CHROME_TEST_CHROMEDRIVER_BASIC_TYPES_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_BASIC_TYPES_H_
+#define CHROME_TEST_QTWEBKITDRIVER_BASIC_TYPES_H_
 
 struct WebPoint {
   WebPoint();
@@ -40,4 +40,4 @@ struct WebRect {
   WebSize size;
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_BASIC_TYPES_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_BASIC_TYPES_H_

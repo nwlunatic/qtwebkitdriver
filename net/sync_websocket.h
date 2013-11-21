@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_NET_SYNC_WEBSOCKET_H_
-#define CHROME_TEST_CHROMEDRIVER_NET_SYNC_WEBSOCKET_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_NET_SYNC_WEBSOCKET_H_
+#define CHROME_TEST_QTWEBKITDRIVER_NET_SYNC_WEBSOCKET_H_
 
 #include <string>
 
@@ -43,4 +43,4 @@ class SyncWebSocket {
   virtual bool HasNextMessage() = 0;
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_NET_SYNC_WEBSOCKET_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_NET_SYNC_WEBSOCKET_H_

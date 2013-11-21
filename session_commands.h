@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_SESSION_COMMANDS_H_
-#define CHROME_TEST_CHROMEDRIVER_SESSION_COMMANDS_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_SESSION_COMMANDS_H_
+#define CHROME_TEST_QTWEBKITDRIVER_SESSION_COMMANDS_H_
 
 #include <string>
 
 #include "base/callback_forward.h"
 #include "base/memory/scoped_ptr.h"
-#include "chrome/test/chromedriver/command.h"
-#include "chrome/test/chromedriver/net/sync_websocket_factory.h"
+#include "chrome/test/qtwebkitdriver/command.h"
+#include "chrome/test/qtwebkitdriver/net/sync_websocket_factory.h"
 
 namespace base {
 class DictionaryValue;
@@ -153,4 +153,4 @@ Status ExecuteUploadFile(
     const base::DictionaryValue& params,
     scoped_ptr<base::Value>* value);
 
-#endif  // CHROME_TEST_CHROMEDRIVER_SESSION_COMMANDS_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_SESSION_COMMANDS_H_

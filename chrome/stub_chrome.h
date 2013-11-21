@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_STUB_CHROME_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_STUB_CHROME_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_STUB_CHROME_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_STUB_CHROME_H_
 
 #include <list>
 
 #include "base/compiler_specific.h"
-#include "chrome/test/chromedriver/chrome/chrome.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome.h"
 
 class Status;
 class WebView;
@@ -32,4 +32,4 @@ class StubChrome : public Chrome {
   virtual Status Quit() OVERRIDE;
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_STUB_CHROME_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_STUB_CHROME_H_

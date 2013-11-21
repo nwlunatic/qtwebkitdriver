@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_COMMANDS_H_
-#define CHROME_TEST_CHROMEDRIVER_COMMANDS_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_COMMANDS_H_
+#define CHROME_TEST_QTWEBKITDRIVER_COMMANDS_H_
 
 #include <string>
 
 #include "base/callback_forward.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/scoped_ptr.h"
-#include "chrome/test/chromedriver/command.h"
-#include "chrome/test/chromedriver/session_thread_map.h"
+#include "chrome/test/qtwebkitdriver/command.h"
+#include "chrome/test/qtwebkitdriver/session_thread_map.h"
 
 namespace base {
 class DictionaryValue;
@@ -63,4 +63,4 @@ namespace internal {
 void CreateSessionOnSessionThreadForTesting(const std::string& id);
 }  // namespace internal
 
-#endif  // CHROME_TEST_CHROMEDRIVER_COMMANDS_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_COMMANDS_H_

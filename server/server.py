@@ -26,10 +26,10 @@ class Server(object):
       raise RuntimeError('ChromeDriver exe not found at: ' + exe_path)
 
     port = self._FindOpenPort()
-    chromedriver_args = [exe_path, '--port=%d' % port]
+    qtwebkitdriver_args = [exe_path, '--port=%d' % port]
     if log_path:
-      chromedriver_args.append('--log-path=%s' % log_path)
-    self._process = subprocess.Popen(chromedriver_args)
+      qtwebkitdriver_args.append('--log-path=%s' % log_path)
+    self._process = subprocess.Popen(qtwebkitdriver_args)
     self._url = 'http://127.0.0.1:%d' % port
     if self._process is None:
       raise RuntimeError('ChromeDriver server cannot be started')

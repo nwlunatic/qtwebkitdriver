@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_DEVICE_MANAGER_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_DEVICE_MANAGER_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_DEVICE_MANAGER_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_DEVICE_MANAGER_H_
 
 #include <list>
 #include <string>
@@ -70,4 +70,4 @@ class DeviceManager {
   DISALLOW_COPY_AND_ASSIGN(DeviceManager);
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_DEVICE_MANAGER_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_DEVICE_MANAGER_H_

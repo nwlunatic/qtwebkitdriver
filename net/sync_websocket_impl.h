@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_NET_SYNC_WEBSOCKET_IMPL_H_
-#define CHROME_TEST_CHROMEDRIVER_NET_SYNC_WEBSOCKET_IMPL_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_NET_SYNC_WEBSOCKET_IMPL_H_
+#define CHROME_TEST_QTWEBKITDRIVER_NET_SYNC_WEBSOCKET_IMPL_H_
 
 #include <list>
 #include <string>
@@ -14,8 +14,8 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/synchronization/condition_variable.h"
 #include "base/synchronization/lock.h"
-#include "chrome/test/chromedriver/net/sync_websocket.h"
-#include "chrome/test/chromedriver/net/websocket.h"
+#include "chrome/test/qtwebkitdriver/net/sync_websocket.h"
+#include "chrome/test/qtwebkitdriver/net/websocket.h"
 #include "net/base/completion_callback.h"
 #include "net/socket_stream/socket_stream.h"
 
@@ -109,4 +109,4 @@ struct SyncWebSocketImpl::CoreTraits {
   }
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_NET_SYNC_WEBSOCKET_IMPL_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_NET_SYNC_WEBSOCKET_IMPL_H_

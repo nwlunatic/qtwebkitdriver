@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_KEY_CONVERTER_H_
-#define CHROME_TEST_CHROMEDRIVER_KEY_CONVERTER_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_KEY_CONVERTER_H_
+#define CHROME_TEST_QTWEBKITDRIVER_KEY_CONVERTER_H_
 
 #include <list>
 #include <string>
@@ -31,4 +31,4 @@ Status ConvertKeysToKeyEvents(const string16& keys,
                               int* modifiers,
                               std::list<KeyEvent>* key_events);
 
-#endif  // CHROME_TEST_CHROMEDRIVER_KEY_CONVERTER_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_KEY_CONVERTER_H_

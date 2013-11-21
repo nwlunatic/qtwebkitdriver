@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_CHROME_IMPL_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_CHROME_IMPL_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_CHROME_IMPL_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_CHROME_IMPL_H_
 
 #include <list>
 #include <string>
@@ -12,7 +12,7 @@
 #include "base/memory/linked_ptr.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/memory/scoped_vector.h"
-#include "chrome/test/chromedriver/chrome/chrome.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome.h"
 
 class AutomationExtension;
 class DevToolsEventListener;
@@ -59,4 +59,4 @@ class ChromeImpl : public Chrome {
   scoped_ptr<PortReservation> port_reservation_;
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_CHROME_IMPL_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_CHROME_IMPL_H_

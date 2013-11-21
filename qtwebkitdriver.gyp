@@ -169,7 +169,7 @@
                       'js/get_element_region.js',
                       'js/is_option_element_toggleable.js',
           ],
-          'message': 'Generating sources for embedding js in chromedriver',
+          'message': 'Generating sources for embedding js in qtwebkitdriver',
         },
         {
           'action_name': 'embed_user_data_dir_in_cpp',
@@ -190,7 +190,7 @@
                       'chrome/preferences.txt',
                       'chrome/local_state.txt',
           ],
-          'message': 'Generating sources for embedding user data dir in chromedriver',
+          'message': 'Generating sources for embedding user data dir in qtwebkitdriver',
         },
         {
           'action_name': 'embed_extension_in_cpp',
@@ -315,7 +315,7 @@
         '../../../',
       ],
       'sources': [
-        'server/chromedriver_server.cc',
+        'server/qtwebkitdriver_server.cc',
       ],
       # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
       'msvs_disabled_warnings': [ 4267, ],

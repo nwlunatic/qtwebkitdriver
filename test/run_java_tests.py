@@ -5,10 +5,10 @@
 
 """Runs the WebDriver Java acceptance tests.
 
-This script is called from chrome/test/chromedriver/run_all_tests.py and reports
+This script is called from chrome/test/qtwebkitdriver/run_all_tests.py and reports
 results using the buildbot annotation scheme.
 
-For ChromeDriver documentation, refer to http://code.google.com/p/chromedriver.
+For ChromeDriver documentation, refer to http://code.google.com/p/qtwebkitdriver.
 """
 
 import optparse
@@ -58,7 +58,7 @@ class TestResult(object):
 
 
 def _Run(java_tests_src_dir, test_filter,
-         chromedriver_path, chrome_path, log_path, android_package,
+         qtwebkitdriver_path, chrome_path, log_path, android_package,
          verbose, debug):
   """Run the WebDriver Java tests and return the test results.
 
@@ -66,7 +66,7 @@ def _Run(java_tests_src_dir, test_filter,
     java_tests_src_dir: the java test source code directory.
     test_filter: the filter to use when choosing tests to run. Format is same
         as Google C++ Test format.
-    chromedriver_path: path to ChromeDriver exe.
+    qtwebkitdriver_path: path to ChromeDriver exe.
     chrome_path: path to Chrome exe.
     log_path: path to server log.
     android_package: name of Chrome's Android package.
@@ -94,7 +94,7 @@ def _Run(java_tests_src_dir, test_filter,
                   os.path.join(test_dir, test_jar))
 
   sys_props = ['selenium.browser=chrome',
-               'webdriver.chrome.driver=' + os.path.abspath(chromedriver_path)]
+               'webdriver.chrome.driver=' + os.path.abspath(qtwebkitdriver_path)]
   if chrome_path:
     sys_props += ['webdriver.chrome.binary=' + os.path.abspath(chrome_path)]
   if log_path:
@@ -230,8 +230,8 @@ def main():
       '', '--debug', action='store_true', default=False,
       help='Whether to wait to be attached by a debugger')
   parser.add_option(
-      '', '--chromedriver', type='string', default=None,
-      help='Path to a build of the chromedriver library(REQUIRED!)')
+      '', '--qtwebkitdriver', type='string', default=None,
+      help='Path to a build of the qtwebkitdriver library(REQUIRED!)')
   parser.add_option(
       '', '--chrome', type='string', default=None,
       help='Path to a build of the chrome binary')
@@ -256,8 +256,8 @@ def main():
       help='Relaunch the jar test harness after each test')
   options, _ = parser.parse_args()
 
-  if options.chromedriver is None or not os.path.exists(options.chromedriver):
-    parser.error('chromedriver is required or the given path is invalid.' +
+  if options.qtwebkitdriver is None or not os.path.exists(options.qtwebkitdriver):
+    parser.error('qtwebkitdriver is required or the given path is invalid.' +
                  'Please run "%s --help" for help' % __file__)
 
   if options.android_package is not None:
@@ -287,7 +287,7 @@ def main():
       test_filters = [test_filter]
 
     java_tests_src_dir = os.path.join(chrome_paths.GetSrc(), 'chrome', 'test',
-                                      'chromedriver', 'third_party',
+                                      'qtwebkitdriver', 'third_party',
                                       'java_tests')
     if (not os.path.exists(java_tests_src_dir) or
         not os.listdir(java_tests_src_dir)):
@@ -295,9 +295,9 @@ def main():
                         '/webdriver')
       print ('"%s" is empty or it doesn\'t exist. ' % java_tests_src_dir +
              'Need to map <chrome-svn>/trunk/deps/third_party/webdriver to '
-             'chrome/test/chromedriver/third_party/java_tests in .gclient.\n'
+             'chrome/test/qtwebkitdriver/third_party/java_tests in .gclient.\n'
              'Alternatively, do:\n'
-             '  $ cd chrome/test/chromedriver/third_party\n'
+             '  $ cd chrome/test/qtwebkitdriver/third_party\n'
              '  $ svn co %s java_tests' % java_tests_url)
       return 1
 
@@ -306,7 +306,7 @@ def main():
       results += _Run(
           java_tests_src_dir=java_tests_src_dir,
           test_filter=filter,
-          chromedriver_path=options.chromedriver,
+          qtwebkitdriver_path=options.qtwebkitdriver,
           chrome_path=options.chrome,
           log_path=options.log_path,
           android_package=options.android_package,

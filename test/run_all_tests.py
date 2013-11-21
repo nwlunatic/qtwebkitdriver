@@ -41,22 +41,22 @@ def _AddToolsToSystemPathForWindows():
 
 
 def _GenerateTestCommand(script,
-                         chromedriver,
-                         ref_chromedriver=None,
+                         qtwebkitdriver,
+                         ref_qtwebkitdriver=None,
                          chrome=None,
                          chrome_version=None,
                          android_package=None,
                          verbose=False):
-  _, log_path = tempfile.mkstemp(prefix='chromedriver_')
-  print 'chromedriver server log: %s' % log_path
+  _, log_path = tempfile.mkstemp(prefix='qtwebkitdriver_')
+  print 'qtwebkitdriver server log: %s' % log_path
   cmd = [
       sys.executable,
       os.path.join(_THIS_DIR, script),
-      '--chromedriver=%s' % chromedriver,
+      '--qtwebkitdriver=%s' % qtwebkitdriver,
       '--log-path=%s' % log_path,
   ]
-  if ref_chromedriver:
-    cmd.append('--reference-chromedriver=' + ref_chromedriver)
+  if ref_qtwebkitdriver:
+    cmd.append('--reference-qtwebkitdriver=' + ref_qtwebkitdriver)
 
   if chrome:
     cmd.append('--chrome=' + chrome)
@@ -73,7 +73,7 @@ def _GenerateTestCommand(script,
   return cmd
 
 
-def RunPythonTests(chromedriver, ref_chromedriver,
+def RunPythonTests(qtwebkitdriver, ref_qtwebkitdriver,
                    chrome=None, chrome_version=None,
                    chrome_version_name=None, android_package=None):
   version_info = ''
@@ -82,8 +82,8 @@ def RunPythonTests(chromedriver, ref_chromedriver,
   util.MarkBuildStepStart('python_tests%s' % version_info)
   code = util.RunCommand(
       _GenerateTestCommand('run_py_tests.py',
-                           chromedriver,
-                           ref_chromedriver=ref_chromedriver,
+                           qtwebkitdriver,
+                           ref_qtwebkitdriver=ref_qtwebkitdriver,
                            chrome=chrome,
                            chrome_version=chrome_version,
                            android_package=android_package))
@@ -92,7 +92,7 @@ def RunPythonTests(chromedriver, ref_chromedriver,
   return code
 
 
-def RunJavaTests(chromedriver, chrome=None, chrome_version=None,
+def RunJavaTests(qtwebkitdriver, chrome=None, chrome_version=None,
                  chrome_version_name=None, android_package=None,
                  verbose=False):
   version_info = ''
@@ -101,8 +101,8 @@ def RunJavaTests(chromedriver, chrome=None, chrome_version=None,
   util.MarkBuildStepStart('java_tests%s' % version_info)
   code = util.RunCommand(
       _GenerateTestCommand('run_java_tests.py',
-                           chromedriver,
-                           ref_chromedriver=None,
+                           qtwebkitdriver,
+                           ref_qtwebkitdriver=None,
                            chrome=chrome,
                            chrome_version=chrome_version,
                            android_package=android_package,
@@ -113,7 +113,7 @@ def RunJavaTests(chromedriver, chrome=None, chrome_version=None,
 
 
 def RunCppTests(cpp_tests):
-  util.MarkBuildStepStart('chromedriver_tests')
+  util.MarkBuildStepStart('qtwebkitdriver_tests')
   code = util.RunCommand([cpp_tests])
   if code:
     util.MarkBuildStepError()
@@ -142,8 +142,8 @@ def main():
   exe_postfix = ''
   if util.IsWindows():
     exe_postfix = '.exe'
-  cpp_tests_name = 'chromedriver_tests' + exe_postfix
-  server_name = 'chromedriver' + exe_postfix
+  cpp_tests_name = 'qtwebkitdriver_tests' + exe_postfix
+  server_name = 'qtwebkitdriver' + exe_postfix
 
   required_build_outputs = [server_name]
   if not options.android_packages:
@@ -152,19 +152,19 @@ def main():
   constants.SetBuildType(os.path.basename(build_dir))
   print 'Using build outputs from', build_dir
 
-  chromedriver = os.path.join(build_dir, server_name)
+  qtwebkitdriver = os.path.join(build_dir, server_name)
   platform_name = util.GetPlatformName()
   if util.IsLinux() and platform.architecture()[0] == '64bit':
     platform_name += '64'
-  ref_chromedriver = os.path.join(
+  ref_qtwebkitdriver = os.path.join(
       chrome_paths.GetSrc(),
-      'chrome', 'test', 'chromedriver', 'third_party', 'java_tests',
+      'chrome', 'test', 'qtwebkitdriver', 'third_party', 'java_tests',
       'reference_builds',
-      'chromedriver_%s%s' % (platform_name, exe_postfix))
+      'qtwebkitdriver_%s%s' % (platform_name, exe_postfix))
 
   if util.IsLinux():
     # Set LD_LIBRARY_PATH to enable successful loading of shared object files,
-    # when chromedriver2.so is not a static build.
+    # when qtwebkitdriver2.so is not a static build.
     _AppendEnvironmentPath('LD_LIBRARY_PATH', os.path.join(build_dir, 'lib'))
   elif util.IsWindows():
     # For Windows bots: add ant, java(jre) and the like to system path.
@@ -175,11 +175,11 @@ def main():
         _THIS_DIR, os.pardir, 'chrome')
     code = 0
     for package in options.android_packages.split(','):
-      code1 = RunPythonTests(chromedriver,
-                             ref_chromedriver,
+      code1 = RunPythonTests(qtwebkitdriver,
+                             ref_qtwebkitdriver,
                              chrome_version_name=package,
                              android_package=package)
-      code2 = RunJavaTests(chromedriver,
+      code2 = RunJavaTests(qtwebkitdriver,
                            chrome_version_name=package,
                            android_package=package,
                            verbose=True)
@@ -203,12 +203,12 @@ def main():
         version_name = version[1]
         download_site = archive.Site.SNAPSHOT
       chrome_path = DownloadChrome(version_name, version[1], download_site)
-      code1 = RunPythonTests(chromedriver,
-                             ref_chromedriver,
+      code1 = RunPythonTests(qtwebkitdriver,
+                             ref_qtwebkitdriver,
                              chrome=chrome_path,
                              chrome_version=version[0],
                              chrome_version_name='v%s' % version_name)
-      code2 = RunJavaTests(chromedriver, chrome=chrome_path,
+      code2 = RunJavaTests(qtwebkitdriver, chrome=chrome_path,
                            chrome_version=version[0],
                            chrome_version_name='v%s' % version_name)
       code = code or code1 or code2

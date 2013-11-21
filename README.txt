@@ -4,21 +4,21 @@ contribute.
 ChromeDriver is an implementation of the WebDriver standard,
 which allows users to automate testing of their website across browsers.
 
-See the user site at https://sites.google.com/a/chromium.org/chromedriver/
+See the user site at https://sites.google.com/a/chromium.org/qtwebkitdriver/
 
 =====Getting started=====
-Build ChromeDriver by building the 'chromedriver' target. This will
+Build ChromeDriver by building the 'qtwebkitdriver' target. This will
 create an executable binary in the build folder named
-'chromedriver[.exe]'.
+'qtwebkitdriver[.exe]'.
 
 Once built, ChromeDriver can be used interactively with python.
 
 $ export PYTHONPATH=<THIS_DIR>/server:<THIS_DIR>/client
 $ python
 >>> import server
->>> import chromedriver
->>> cd_server = server.Server('/path/to/chromedriver/executable')
->>> driver = chromedriver.ChromeDriver(cd_server.GetUrl())
+>>> import qtwebkitdriver
+>>> cd_server = server.Server('/path/to/qtwebkitdriver/executable')
+>>> driver = qtwebkitdriver.ChromeDriver(cd_server.GetUrl())
 >>> driver.Load('http://www.google.com')
 >>> driver.Quit()
 >>> cd_server.Kill()
@@ -50,7 +50,7 @@ way back to the IO thread as a HTTP response for the server to send.
 
 =====Code structure (relative to this file)=====
 1) .
-Implements chromedriver commands.
+Implements qtwebkitdriver commands.
 
 2) chrome/
 A basic interface for controlling Chrome. Should not depend on or reference
@@ -66,8 +66,8 @@ Code to deal with network communication, such as connection to DevTools.
 Code for a python client.
 
 6) server/
-Code for the chromedriver server.
-A python wrapper to the chromedriver server.
+Code for the qtwebkitdriver server.
+A python wrapper to the qtwebkitdriver server.
 
 7) extension/
 An extension used for automating the desktop browser.
@@ -76,19 +76,19 @@ An extension used for automating the desktop browser.
 Integration tests.
 
 9) third_party/
-Third party libraries used by chromedriver.
+Third party libraries used by qtwebkitdriver.
 
 =====Testing=====
 See the ChromeDriver waterfall at:
-    http://build.chromium.org/p/chromium.chromedriver/waterfall
+    http://build.chromium.org/p/chromium.qtwebkitdriver/waterfall
 There are 4 test suites for verifying ChromeDriver's correctness:
 
-1) chromedriver_unittests (chrome/chrome_tests.gypi)
+1) qtwebkitdriver_unittests (chrome/chrome_tests.gypi)
 This is the unittest target, which runs on the main waterfall on win/mac/linux
 and can close the tree. It is also run on the commit queue and try bots by
 default. Tests should take a few milliseconds and be very stable.
 
-2) chromedriver_tests (chrome/chrome_tests.gypi)
+2) qtwebkitdriver_tests (chrome/chrome_tests.gypi)
 This is a collection of C++ medium sized tests which can be run optionally
 on the trybots.
 
@@ -103,6 +103,6 @@ bots. Run with --help for more info.
 
 =====Contributing=====
 Find an open issue and submit a patch for review by an individual listed in
-the OWNERS file in this directory. Issues are tracked in chromedriver's issue
+the OWNERS file in this directory. Issues are tracked in qtwebkitdriver's issue
 tracker:
-    https://code.google.com/p/chromedriver/issues/list
+    https://code.google.com/p/qtwebkitdriver/issues/list

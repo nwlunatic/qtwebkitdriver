@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/chromedriver/commands.h"
+#include "chrome/test/qtwebkitdriver/commands.h"
 
 #include <algorithm>
 #include <list>
@@ -18,21 +18,21 @@
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/capabilities.h"
-#include "chrome/test/chromedriver/chrome/chrome.h"
-#include "chrome/test/chromedriver/chrome/chrome_android_impl.h"
-#include "chrome/test/chromedriver/chrome/chrome_desktop_impl.h"
-#include "chrome/test/chromedriver/chrome/devtools_event_listener.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/version.h"
-#include "chrome/test/chromedriver/chrome/web_view.h"
-#include "chrome/test/chromedriver/chrome_launcher.h"
-#include "chrome/test/chromedriver/logging.h"
-#include "chrome/test/chromedriver/net/net_util.h"
-#include "chrome/test/chromedriver/net/url_request_context_getter.h"
-#include "chrome/test/chromedriver/session.h"
-#include "chrome/test/chromedriver/session_thread_map.h"
-#include "chrome/test/chromedriver/util.h"
+#include "chrome/test/qtwebkitdriver/capabilities.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome_android_impl.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome_desktop_impl.h"
+#include "chrome/test/qtwebkitdriver/chrome/devtools_event_listener.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/version.h"
+#include "chrome/test/qtwebkitdriver/chrome/web_view.h"
+#include "chrome/test/qtwebkitdriver/chrome_launcher.h"
+#include "chrome/test/qtwebkitdriver/logging.h"
+#include "chrome/test/qtwebkitdriver/net/net_util.h"
+#include "chrome/test/qtwebkitdriver/net/url_request_context_getter.h"
+#include "chrome/test/qtwebkitdriver/session.h"
+#include "chrome/test/qtwebkitdriver/session_thread_map.h"
+#include "chrome/test/qtwebkitdriver/util.h"
 
 #include <iostream>
 

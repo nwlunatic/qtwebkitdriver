@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_ALERT_COMMANDS_H_
-#define CHROME_TEST_CHROMEDRIVER_ALERT_COMMANDS_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_ALERT_COMMANDS_H_
+#define CHROME_TEST_QTWEBKITDRIVER_ALERT_COMMANDS_H_
 
 #include "base/callback_forward.h"
 #include "base/memory/scoped_ptr.h"
@@ -65,4 +65,4 @@ Status ExecuteDismissAlert(
     const base::DictionaryValue& params,
     scoped_ptr<base::Value>* value);
 
-#endif  // CHROME_TEST_CHROMEDRIVER_ALERT_COMMANDS_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_ALERT_COMMANDS_H_

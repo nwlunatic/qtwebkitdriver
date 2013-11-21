@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_LOGGING_H_
-#define CHROME_TEST_CHROMEDRIVER_LOGGING_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_LOGGING_H_
+#define CHROME_TEST_QTWEBKITDRIVER_LOGGING_H_
 
 #include <string>
 
@@ -11,7 +11,7 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/memory/scoped_vector.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/log.h"
+#include "chrome/test/qtwebkitdriver/chrome/log.h"
 
 struct Capabilities;
 class DevToolsEventListener;
@@ -65,4 +65,4 @@ Status CreateLogs(const Capabilities& capabilities,
                   ScopedVector<WebDriverLog>* out_logs,
                   ScopedVector<DevToolsEventListener>* out_listeners);
 
-#endif  // CHROME_TEST_CHROMEDRIVER_LOGGING_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_LOGGING_H_

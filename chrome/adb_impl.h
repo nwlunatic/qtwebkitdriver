@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_ADB_IMPL_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_ADB_IMPL_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_ADB_IMPL_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_ADB_IMPL_H_
 
 #include <string>
 #include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/memory/ref_counted.h"
-#include "chrome/test/chromedriver/chrome/adb.h"
+#include "chrome/test/qtwebkitdriver/chrome/adb.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -62,4 +62,4 @@ class AdbImpl : public Adb {
   int port_;
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_ADB_IMPL_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_ADB_IMPL_H_

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CAPABILITIES_H_
-#define CHROME_TEST_CHROMEDRIVER_CAPABILITIES_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CAPABILITIES_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CAPABILITIES_H_
 
 #include <map>
 #include <set>
@@ -14,8 +14,8 @@
 #include "base/files/file_path.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/strings/string16.h"
-#include "chrome/test/chromedriver/chrome/log.h"
-#include "chrome/test/chromedriver/net/net_util.h"
+#include "chrome/test/qtwebkitdriver/chrome/log.h"
+#include "chrome/test/qtwebkitdriver/net/net_util.h"
 
 namespace base {
 class DictionaryValue;
@@ -110,4 +110,4 @@ struct Capabilities {
   Switches switches;
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CAPABILITIES_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CAPABILITIES_H_

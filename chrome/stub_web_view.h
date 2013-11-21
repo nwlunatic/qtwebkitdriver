@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_STUB_WEB_VIEW_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_STUB_WEB_VIEW_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_STUB_WEB_VIEW_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_STUB_WEB_VIEW_H_
 
 #include <list>
 #include <string>
 
 #include "base/compiler_specific.h"
 #include "base/memory/scoped_ptr.h"
-#include "chrome/test/chromedriver/chrome/web_view.h"
+#include "chrome/test/qtwebkitdriver/chrome/web_view.h"
 
 class StubWebView : public WebView {
  public:
@@ -75,4 +75,4 @@ class StubWebView : public WebView {
   std::string id_;
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_STUB_WEB_VIEW_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_STUB_WEB_VIEW_H_

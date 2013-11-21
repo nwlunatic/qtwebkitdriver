@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_GEOLOCATION_OVERRIDE_MANAGER_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_GEOLOCATION_OVERRIDE_MANAGER_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_GEOLOCATION_OVERRIDE_MANAGER_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_GEOLOCATION_OVERRIDE_MANAGER_H_
 
 #include <string>
 
 #include "base/basictypes.h"
 #include "base/compiler_specific.h"
 #include "base/memory/scoped_ptr.h"
-#include "chrome/test/chromedriver/chrome/devtools_event_listener.h"
+#include "chrome/test/qtwebkitdriver/chrome/devtools_event_listener.h"
 
 namespace base {
 class DictionaryValue;
@@ -44,4 +44,4 @@ class GeolocationOverrideManager : public DevToolsEventListener {
   DISALLOW_COPY_AND_ASSIGN(GeolocationOverrideManager);
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_GEOLOCATION_OVERRIDE_MANAGER_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_GEOLOCATION_OVERRIDE_MANAGER_H_

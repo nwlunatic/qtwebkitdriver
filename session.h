@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_SESSION_H_
-#define CHROME_TEST_CHROMEDRIVER_SESSION_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_SESSION_H_
+#define CHROME_TEST_QTWEBKITDRIVER_SESSION_H_
 
 #include <list>
 #include <string>
@@ -13,8 +13,8 @@
 #include "base/memory/scoped_ptr.h"
 #include "base/memory/scoped_vector.h"
 #include "base/time/time.h"
-#include "chrome/test/chromedriver/basic_types.h"
-#include "chrome/test/chromedriver/chrome/geoposition.h"
+#include "chrome/test/qtwebkitdriver/basic_types.h"
+#include "chrome/test/qtwebkitdriver/chrome/geoposition.h"
 
 namespace base {
 class DictionaryValue;
@@ -28,11 +28,11 @@ class WebView;
 struct FrameInfo {
   FrameInfo(const std::string& parent_frame_id,
             const std::string& frame_id,
-            const std::string& chromedriver_frame_id);
+            const std::string& qtwebkitdriver_frame_id);
 
   std::string parent_frame_id;
   std::string frame_id;
-  std::string chromedriver_frame_id;
+  std::string qtwebkitdriver_frame_id;
 };
 
 struct Session {
@@ -46,7 +46,7 @@ struct Session {
 
   void SwitchToTopFrame();
   void SwitchToSubFrame(const std::string& frame_id,
-                        const std::string& chromedriver_frame_id);
+                        const std::string& qtwebkitdriver_frame_id);
   std::string GetCurrentFrameId() const;
   std::vector<WebDriverLog*> GetAllLogs() const;
 
@@ -78,4 +78,4 @@ Session* GetThreadLocalSession();
 
 void SetThreadLocalSession(scoped_ptr<Session> session);
 
-#endif  // CHROME_TEST_CHROMEDRIVER_SESSION_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_SESSION_H_

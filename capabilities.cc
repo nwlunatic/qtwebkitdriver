@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/chromedriver/capabilities.h"
+#include "chrome/test/qtwebkitdriver/capabilities.h"
 
 #include <map>
 #include <iostream>
@@ -18,8 +18,8 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/logging.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/logging.h"
 #include "net/base/net_util.h"
 
 namespace {

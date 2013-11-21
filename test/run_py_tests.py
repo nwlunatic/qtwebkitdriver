@@ -22,14 +22,14 @@ sys.path.insert(1, os.path.join(_THIS_DIR, os.pardir, 'client'))
 sys.path.insert(1, os.path.join(_THIS_DIR, os.pardir, 'server'))
 
 import chrome_paths
-import chromedriver
+import qtwebkitdriver
 import unittest_util
 import util
 import server
 from webelement import WebElement
 import webserver
 
-_TEST_DATA_DIR = os.path.join(chrome_paths.GetTestData(), 'chromedriver')
+_TEST_DATA_DIR = os.path.join(chrome_paths.GetTestData(), 'qtwebkitdriver')
 
 if util.IsLinux():
   sys.path.insert(0, os.path.join(chrome_paths.GetSrc(), 'build', 'android'))
@@ -40,7 +40,7 @@ if util.IsLinux():
 
 _NEGATIVE_FILTER = {}
 _NEGATIVE_FILTER['HEAD'] = [
-    # https://code.google.com/p/chromedriver/issues/detail?id=213
+    # https://code.google.com/p/qtwebkitdriver/issues/detail?id=213
     'ChromeDriverTest.testClickElementInSubFrame',
     # This test is flaky since it uses setTimeout.
     # Re-enable once crbug.com/177511 is fixed and we can remove setTimeout.
@@ -50,22 +50,22 @@ _NEGATIVE_FILTER['HEAD'] = [
 _DESKTOP_OS_SPECIFIC_FILTER = []
 if util.IsWindows():
   _DESKTOP_OS_SPECIFIC_FILTER = [
-      # https://code.google.com/p/chromedriver/issues/detail?id=214
+      # https://code.google.com/p/qtwebkitdriver/issues/detail?id=214
       'ChromeDriverTest.testCloseWindow',
-      # https://code.google.com/p/chromedriver/issues/detail?id=299
+      # https://code.google.com/p/qtwebkitdriver/issues/detail?id=299
       'ChromeLogPathCapabilityTest.testChromeLogPath',
   ]
 elif util.IsLinux():
   _DESKTOP_OS_SPECIFIC_FILTER = [
       # Xvfb doesn't support maximization.
       'ChromeDriverTest.testWindowMaximize',
-      # https://code.google.com/p/chromedriver/issues/detail?id=302
+      # https://code.google.com/p/qtwebkitdriver/issues/detail?id=302
       'ChromeDriverTest.testWindowPosition',
       'ChromeDriverTest.testWindowSize',
   ]
 elif util.IsMac():
   _DESKTOP_OS_SPECIFIC_FILTER = [
-      # https://code.google.com/p/chromedriver/issues/detail?id=304
+      # https://code.google.com/p/qtwebkitdriver/issues/detail?id=304
       'ChromeDriverTest.testGoBackAndGoForward',
   ]
 
@@ -98,9 +98,9 @@ _ANDROID_NEGATIVE_FILTER['com.google.android.apps.chrome'] = (
         'ChromeExtensionsCapabilityTest.*',
         # https://crbug.com/274650
         'ChromeDriverTest.testCloseWindow',
-        # https://code.google.com/p/chromedriver/issues/detail?id=270
+        # https://code.google.com/p/qtwebkitdriver/issues/detail?id=270
         'ChromeDriverTest.testPopups',
-        # https://code.google.com/p/chromedriver/issues/detail?id=298
+        # https://code.google.com/p/qtwebkitdriver/issues/detail?id=298
         'ChromeDriverTest.testWindowPosition',
         'ChromeDriverTest.testWindowSize',
         'ChromeDriverTest.testWindowMaximize',
@@ -127,7 +127,7 @@ _ANDROID_NEGATIVE_FILTER['org.chromium.chrome.testshell'] = (
 
 
 class ChromeDriverBaseTest(unittest.TestCase):
-  """Base class for testing chromedriver functionalities."""
+  """Base class for testing qtwebkitdriver functionalities."""
 
   def __init__(self, *args, **kwargs):
     super(ChromeDriverBaseTest, self).__init__(*args, **kwargs)
@@ -142,8 +142,8 @@ class ChromeDriverBaseTest(unittest.TestCase):
 
   def CreateDriver(self, server_url=None, **kwargs):
     if server_url is None:
-      server_url = _CHROMEDRIVER_SERVER_URL
-    driver = chromedriver.ChromeDriver(server_url,
+      server_url = _QTWEBKITDRIVER_SERVER_URL
+    driver = qtwebkitdriver.ChromeDriver(server_url,
                                        chrome_binary=_CHROME_BINARY,
                                        android_package=_ANDROID_PACKAGE,
                                        **kwargs)
@@ -184,7 +184,7 @@ class ChromeDriverTest(ChromeDriverBaseTest):
     pass
 
   def testLoadUrl(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/empty.html'))
 
   def testGetCurrentWindowHandle(self):
     self._driver.GetCurrentWindowHandle()
@@ -209,17 +209,17 @@ class ChromeDriverTest(ChromeDriverBaseTest):
     return None
 
   def testCloseWindow(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/page_test.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/page_test.html'))
     old_handles = self._driver.GetWindowHandles()
     self._driver.FindElement('id', 'link').Click()
     new_window_handle = self._WaitForNewWindow(old_handles)
     self.assertNotEqual(None, new_window_handle)
     self._driver.SwitchToWindow(new_window_handle)
     self.assertEquals(new_window_handle, self._driver.GetCurrentWindowHandle())
-    self.assertRaises(chromedriver.NoSuchElement,
+    self.assertRaises(qtwebkitdriver.NoSuchElement,
                       self._driver.FindElement, 'id', 'link')
     self._driver.CloseWindow()
-    self.assertRaises(chromedriver.NoSuchWindow,
+    self.assertRaises(qtwebkitdriver.NoSuchWindow,
                       self._driver.GetCurrentWindowHandle)
     new_handles = self._driver.GetWindowHandles()
     for old_handle in old_handles:
@@ -230,13 +230,13 @@ class ChromeDriverTest(ChromeDriverBaseTest):
       self._driver.CloseWindow()
 
   def testGetWindowHandles(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/page_test.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/page_test.html'))
     old_handles = self._driver.GetWindowHandles()
     self._driver.FindElement('id', 'link').Click()
     self.assertNotEqual(None, self._WaitForNewWindow(old_handles))
 
   def testSwitchToWindow(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/page_test.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/page_test.html'))
     self.assertEquals(
         1, self._driver.ExecuteScript('window.name = "oldWindow"; return 1;'))
     window1_handle = self._driver.GetCurrentWindowHandle()
@@ -246,7 +246,7 @@ class ChromeDriverTest(ChromeDriverBaseTest):
     self.assertNotEqual(None, new_window_handle)
     self._driver.SwitchToWindow(new_window_handle)
     self.assertEquals(new_window_handle, self._driver.GetCurrentWindowHandle())
-    self.assertRaises(chromedriver.NoSuchElement,
+    self.assertRaises(qtwebkitdriver.NoSuchElement,
                       self._driver.FindElement, 'id', 'link')
     self._driver.SwitchToWindow('oldWindow')
     self.assertEquals(window1_handle, self._driver.GetCurrentWindowHandle())
@@ -264,13 +264,13 @@ class ChromeDriverTest(ChromeDriverBaseTest):
         'bc', self._driver.ExecuteScript(script, stuff[0], stuff[1]))
 
   def testEvaluateInvalidScript(self):
-    self.assertRaises(chromedriver.ChromeDriverException,
+    self.assertRaises(qtwebkitdriver.ChromeDriverException,
                       self._driver.ExecuteScript, '{{{')
 
   def testExecuteAsyncScript(self):
     self._driver.SetTimeout('script', 3000)
     self.assertRaises(
-        chromedriver.ScriptTimeout,
+        qtwebkitdriver.ScriptTimeout,
         self._driver.ExecuteAsyncScript,
         'var callback = arguments[0];'
         'setTimeout(function(){callback(1);}, 10000);')
@@ -322,7 +322,7 @@ class ChromeDriverTest(ChromeDriverBaseTest):
     self.assertEquals('title', self._driver.GetTitle())
 
   def testGetPageSource(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/page_test.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/page_test.html'))
     self.assertTrue('Link to empty.html' in self._driver.GetPageSource())
 
   def testFindElement(self):
@@ -418,7 +418,7 @@ class ChromeDriverTest(ChromeDriverBaseTest):
     self.assertEquals(1, len(self._driver.FindElements('tag name', 'br')))
 
   def testClickElementInSubFrame(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/frame_test.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/frame_test.html'))
     frame = self._driver.FindElement('tag name', 'iframe')
     self._driver.SwitchToFrame(frame)
     # Test clicking element in the sub frame.
@@ -452,12 +452,12 @@ class ChromeDriverTest(ChromeDriverBaseTest):
     self.assertTrue('data:,' in self._driver.GetCurrentUrl())
 
   def testGoBackAndGoForward(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/empty.html'))
     self._driver.GoBack()
     self._driver.GoForward()
 
   def testRefresh(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/empty.html'))
     self._driver.Refresh()
 
   def testMouseMoveTo(self):
@@ -560,16 +560,16 @@ class ChromeDriverTest(ChromeDriverBaseTest):
     self._driver.ExecuteScript('return 1')  # Shouldn't hang.
 
   def testPopups(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/empty.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/empty.html'))
     old_handles = self._driver.GetWindowHandles()
     self._driver.ExecuteScript('window.open("about:blank")')
     new_window_handle = self._WaitForNewWindow(old_handles)
     self.assertNotEqual(None, new_window_handle)
 
   def testNoSuchFrame(self):
-    self.assertRaises(chromedriver.NoSuchFrame,
+    self.assertRaises(qtwebkitdriver.NoSuchFrame,
                       self._driver.SwitchToFrame, 'nosuchframe')
-    self.assertRaises(chromedriver.NoSuchFrame,
+    self.assertRaises(qtwebkitdriver.NoSuchFrame,
                       self._driver.SwitchToFrame,
                       self._driver.FindElement('tagName', 'body'))
 
@@ -579,7 +579,7 @@ class ChromeDriverTest(ChromeDriverBaseTest):
     self.assertEquals(position, self._driver.GetWindowPosition())
 
     # Resize so the window isn't moved offscreen.
-    # See https://code.google.com/p/chromedriver/issues/detail?id=297.
+    # See https://code.google.com/p/qtwebkitdriver/issues/detail?id=297.
     self._driver.SetWindowSize(300, 300)
 
     self._driver.SetWindowPosition(100, 200)
@@ -601,21 +601,21 @@ class ChromeDriverTest(ChromeDriverBaseTest):
     self.assertNotEqual([100, 200], self._driver.GetWindowPosition())
     self.assertNotEqual([600, 400], self._driver.GetWindowSize())
     # Set size first so that the window isn't moved offscreen.
-    # See https://code.google.com/p/chromedriver/issues/detail?id=297.
+    # See https://code.google.com/p/qtwebkitdriver/issues/detail?id=297.
     self._driver.SetWindowSize(600, 400)
     self._driver.SetWindowPosition(100, 200)
     self.assertEquals([100, 200], self._driver.GetWindowPosition())
     self.assertEquals([600, 400], self._driver.GetWindowSize())
 
   def testConsoleLogSources(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/console_log.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/console_log.html'))
     logs = self._driver.GetLog('browser')
     self.assertEquals(len(logs), 2)
     self.assertEquals(logs[0]['source'], 'network')
     self.assertEquals(logs[1]['source'], 'javascript')
 
   def testContextMenuEventFired(self):
-    self._driver.Load(self.GetHttpUrlForFile('/chromedriver/context_menu.html'))
+    self._driver.Load(self.GetHttpUrlForFile('/qtwebkitdriver/context_menu.html'))
     self._driver.MouseMoveTo(self._driver.FindElement('tagName', 'div'))
     self._driver.MouseClick(2)
     self.assertTrue(self._driver.ExecuteScript('return success'))
@@ -628,10 +628,10 @@ class ChromeDriverTest(ChromeDriverBaseTest):
   def testTabCrash(self):
     # If a tab is crashed, the session will be deleted.
     # When 31 is released, will reload the tab instead.
-    # https://code.google.com/p/chromedriver/issues/detail?id=547
-    self.assertRaises(chromedriver.UnknownError,
+    # https://code.google.com/p/qtwebkitdriver/issues/detail?id=547
+    self.assertRaises(qtwebkitdriver.UnknownError,
                       self._driver.Load, 'chrome://crash')
-    self.assertRaises(chromedriver.NoSuchSession,
+    self.assertRaises(qtwebkitdriver.NoSuchSession,
                       self._driver.GetCurrentUrl)
 
   def testDoesntHangOnDebugger(self):
@@ -639,7 +639,7 @@ class ChromeDriverTest(ChromeDriverBaseTest):
 
 
 class ChromeSwitchesCapabilityTest(ChromeDriverBaseTest):
-  """Tests that chromedriver properly processes chromeOptions.args capabilities.
+  """Tests that qtwebkitdriver properly processes chromeOptions.args capabilities.
 
   Makes sure the switches are passed to Chrome.
   """
@@ -657,13 +657,13 @@ class ChromeSwitchesCapabilityTest(ChromeDriverBaseTest):
 
 
 class ChromeExtensionsCapabilityTest(ChromeDriverBaseTest):
-  """Tests that chromedriver properly processes chromeOptions.extensions."""
+  """Tests that qtwebkitdriver properly processes chromeOptions.extensions."""
 
   def _PackExtension(self, ext_path):
     return base64.b64encode(open(ext_path, 'rb').read())
 
   def testExtensionsInstall(self):
-    """Checks that chromedriver can take the extensions."""
+    """Checks that qtwebkitdriver can take the extensions."""
     crx_1 = os.path.join(_TEST_DATA_DIR, 'ext_test_1.crx')
     crx_2 = os.path.join(_TEST_DATA_DIR, 'ext_test_2.crx')
     self.CreateDriver(chrome_extensions=[self._PackExtension(crx_1),
@@ -688,7 +688,7 @@ class ChromeExtensionsCapabilityTest(ChromeDriverBaseTest):
 
 
 class ChromeLogPathCapabilityTest(ChromeDriverBaseTest):
-  """Tests that chromedriver properly processes chromeOptions.logPath."""
+  """Tests that qtwebkitdriver properly processes chromeOptions.logPath."""
 
   LOG_MESSAGE = 'Welcome to ChromeLogPathCapabilityTest!'
 
@@ -744,8 +744,8 @@ class ExistingBrowserTest(ChromeDriverBaseTest):
 class PerfTest(ChromeDriverBaseTest):
   """Tests for ChromeDriver perf."""
   def setUp(self):
-    self.assertTrue(_REFERENCE_CHROMEDRIVER is not None,
-                    'must supply a reference-chromedriver arg')
+    self.assertTrue(_REFERENCE_QTWEBKITDRIVER is not None,
+                    'must supply a reference-qtwebkitdriver arg')
 
   def _RunDriverPerfTest(self, name, test_func):
     """Runs a perf test comparing a reference and new ChromeDriver server.
@@ -759,10 +759,10 @@ class PerfTest(ChromeDriverBaseTest):
       ref = []
       new = []
 
-    ref_server = server.Server(_REFERENCE_CHROMEDRIVER)
+    ref_server = server.Server(_REFERENCE_QTWEBKITDRIVER)
     results = Results()
     result_url_pairs = zip([results.new, results.ref],
-                           [_CHROMEDRIVER_SERVER_URL, ref_server.GetUrl()])
+                           [_QTWEBKITDRIVER_SERVER_URL, ref_server.GetUrl()])
     for iteration in range(30):
       for result, url in result_url_pairs:
         result += [test_func(url)]
@@ -811,14 +811,14 @@ class PerfTest(ChromeDriverBaseTest):
 if __name__ == '__main__':
   parser = optparse.OptionParser()
   parser.add_option(
-      '', '--chromedriver',
-      help='Path to chromedriver server (REQUIRED!)')
+      '', '--qtwebkitdriver',
+      help='Path to qtwebkitdriver server (REQUIRED!)')
   parser.add_option(
       '', '--log-path',
       help='Output verbose server logs to this file')
   parser.add_option(
-      '', '--reference-chromedriver',
-      help='Path to the reference chromedriver server')
+      '', '--reference-qtwebkitdriver',
+      help='Path to the reference qtwebkitdriver server')
   parser.add_option(
       '', '--chrome', help='Path to a build of the chrome binary')
   parser.add_option(
@@ -832,17 +832,17 @@ if __name__ == '__main__':
       '', '--android-package', help='Android package name')
   options, args = parser.parse_args()
 
-  if not options.chromedriver or not os.path.exists(options.chromedriver):
-    parser.error('chromedriver is required or the given path is invalid.' +
+  if not options.qtwebkitdriver or not os.path.exists(options.qtwebkitdriver):
+    parser.error('qtwebkitdriver is required or the given path is invalid.' +
                  'Please run "%s --help" for help' % __file__)
 
-  chromedriver_server = server.Server(os.path.abspath(options.chromedriver),
+  qtwebkitdriver_server = server.Server(os.path.abspath(options.qtwebkitdriver),
                                       options.log_path)
-  global _CHROMEDRIVER_SERVER_URL
-  _CHROMEDRIVER_SERVER_URL = chromedriver_server.GetUrl()
+  global _QTWEBKITDRIVER_SERVER_URL
+  _QTWEBKITDRIVER_SERVER_URL = qtwebkitdriver_server.GetUrl()
 
-  global _REFERENCE_CHROMEDRIVER
-  _REFERENCE_CHROMEDRIVER = options.reference_chromedriver
+  global _REFERENCE_QTWEBKITDRIVER
+  _REFERENCE_QTWEBKITDRIVER = options.reference_qtwebkitdriver
 
   global _CHROME_BINARY
   if options.chrome:

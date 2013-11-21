@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_NET_ADB_CLIENT_SOCKET_H_
-#define CHROME_TEST_CHROMEDRIVER_NET_ADB_CLIENT_SOCKET_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_NET_ADB_CLIENT_SOCKET_H_
+#define CHROME_TEST_QTWEBKITDRIVER_NET_ADB_CLIENT_SOCKET_H_
 
 #include "base/callback.h"
 #include "net/base/io_buffer.h"
@@ -68,4 +68,4 @@ class AdbClientSocket {
   DISALLOW_COPY_AND_ASSIGN(AdbClientSocket);
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_NET_ADB_CLIENT_SOCKET_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_NET_ADB_CLIENT_SOCKET_H_

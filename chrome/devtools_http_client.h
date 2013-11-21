@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_DEVTOOLS_HTTP_CLIENT_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_DEVTOOLS_HTTP_CLIENT_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_DEVTOOLS_HTTP_CLIENT_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_DEVTOOLS_HTTP_CLIENT_H_
 
 #include <string>
 #include <vector>
 
 #include "base/memory/ref_counted.h"
 #include "base/memory/scoped_ptr.h"
-#include "chrome/test/chromedriver/net/sync_websocket_factory.h"
+#include "chrome/test/qtwebkitdriver/net/sync_websocket_factory.h"
 
 namespace base {
 class TimeDelta;
@@ -104,4 +104,4 @@ Status ParseVersionInfo(const std::string& data,
                         std::string* version);
 }  // namespace internal
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_DEVTOOLS_HTTP_CLIENT_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_DEVTOOLS_HTTP_CLIENT_H_

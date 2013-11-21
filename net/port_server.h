@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_NET_PORT_SERVER_H_
-#define CHROME_TEST_CHROMEDRIVER_NET_PORT_SERVER_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_NET_PORT_SERVER_H_
+#define CHROME_TEST_QTWEBKITDRIVER_NET_PORT_SERVER_H_
 
 #include <list>
 #include <set>
@@ -65,4 +65,4 @@ class PortManager {
   int max_port_;
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_NET_PORT_SERVER_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_NET_PORT_SERVER_H_

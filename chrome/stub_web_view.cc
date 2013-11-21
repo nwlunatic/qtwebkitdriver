@@ -4,9 +4,9 @@
 
 #include "base/files/file_path.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/stub_web_view.h"
-#include "chrome/test/chromedriver/chrome/ui_events.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/stub_web_view.h"
+#include "chrome/test/qtwebkitdriver/chrome/ui_events.h"
 
 StubWebView::StubWebView(const std::string& id) : id_(id) {}
 

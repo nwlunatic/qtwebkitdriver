@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "chrome/test/chromedriver/chrome_launcher.h"
+#include "chrome/test/qtwebkitdriver/chrome_launcher.h"
 #include <algorithm>
 #include <vector>
 
@@ -27,20 +27,20 @@
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/chrome_android_impl.h"
-#include "chrome/test/chromedriver/chrome/chrome_desktop_impl.h"
-#include "chrome/test/chromedriver/chrome/chrome_existing_impl.h"
-#include "chrome/test/chromedriver/chrome/chrome_finder.h"
-#include "chrome/test/chromedriver/chrome/device_manager.h"
-#include "chrome/test/chromedriver/chrome/devtools_http_client.h"
-#include "chrome/test/chromedriver/chrome/embedded_automation_extension.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/user_data_dir.h"
-#include "chrome/test/chromedriver/chrome/version.h"
-#include "chrome/test/chromedriver/chrome/web_view.h"
-#include "chrome/test/chromedriver/chrome/zip.h"
-#include "chrome/test/chromedriver/net/port_server.h"
-#include "chrome/test/chromedriver/net/url_request_context_getter.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome_android_impl.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome_desktop_impl.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome_existing_impl.h"
+#include "chrome/test/qtwebkitdriver/chrome/chrome_finder.h"
+#include "chrome/test/qtwebkitdriver/chrome/device_manager.h"
+#include "chrome/test/qtwebkitdriver/chrome/devtools_http_client.h"
+#include "chrome/test/qtwebkitdriver/chrome/embedded_automation_extension.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/user_data_dir.h"
+#include "chrome/test/qtwebkitdriver/chrome/version.h"
+#include "chrome/test/qtwebkitdriver/chrome/web_view.h"
+#include "chrome/test/qtwebkitdriver/chrome/zip.h"
+#include "chrome/test/qtwebkitdriver/net/port_server.h"
+#include "chrome/test/qtwebkitdriver/net/url_request_context_getter.h"
 #include "crypto/sha2.h"
 
 namespace {

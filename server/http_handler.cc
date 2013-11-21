@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "chrome/test/chromedriver/server/http_handler.h"
+#include "chrome/test/qtwebkitdriver/server/http_handler.h"
 
 #include "base/bind.h"
 #include "base/callback.h"
@@ -19,16 +19,16 @@
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/alert_commands.h"
-#include "chrome/test/chromedriver/chrome/adb_impl.h"
-#include "chrome/test/chromedriver/chrome/device_manager.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/net/port_server.h"
-#include "chrome/test/chromedriver/net/url_request_context_getter.h"
-#include "chrome/test/chromedriver/session.h"
-#include "chrome/test/chromedriver/session_thread_map.h"
-#include "chrome/test/chromedriver/util.h"
-#include "chrome/test/chromedriver/version.h"
+#include "chrome/test/qtwebkitdriver/alert_commands.h"
+#include "chrome/test/qtwebkitdriver/chrome/adb_impl.h"
+#include "chrome/test/qtwebkitdriver/chrome/device_manager.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/net/port_server.h"
+#include "chrome/test/qtwebkitdriver/net/url_request_context_getter.h"
+#include "chrome/test/qtwebkitdriver/session.h"
+#include "chrome/test/qtwebkitdriver/session_thread_map.h"
+#include "chrome/test/qtwebkitdriver/util.h"
+#include "chrome/test/qtwebkitdriver/version.h"
 #include "net/server/http_server_request_info.h"
 #include "net/server/http_server_response_info.h"
 
@@ -659,7 +659,7 @@ scoped_ptr<net::HttpServerResponseInfo> HttpHandler::PrepareResponseHelper(
   } else if (status.IsError()) {
     Status full_status(status);
     full_status.AddDetails(base::StringPrintf(
-        "Driver info: chromedriver=%s,platform=%s %s %s",
+        "Driver info: qtwebkitdriver=%s,platform=%s %s %s",
         kChromeDriverVersion,
         base::SysInfo::OperatingSystemName().c_str(),
         base::SysInfo::OperatingSystemVersion().c_str(),

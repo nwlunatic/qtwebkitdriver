@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_ELEMENT_UTIL_H_
-#define CHROME_TEST_CHROMEDRIVER_ELEMENT_UTIL_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_ELEMENT_UTIL_H_
+#define CHROME_TEST_QTWEBKITDRIVER_ELEMENT_UTIL_H_
 
 #include <string>
 
 #include "base/memory/scoped_ptr.h"
-#include "chrome/test/chromedriver/basic_types.h"
+#include "chrome/test/qtwebkitdriver/basic_types.h"
 
 namespace base {
 class DictionaryValue;
@@ -153,4 +153,4 @@ Status ScrollElementRegionIntoView(
     const std::string& clickable_element_id,
     WebPoint* location);
 
-#endif  // CHROME_TEST_CHROMEDRIVER_ELEMENT_UTIL_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_ELEMENT_UTIL_H_

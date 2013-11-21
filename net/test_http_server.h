@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_NET_TEST_HTTP_SERVER_H_
-#define CHROME_TEST_CHROMEDRIVER_NET_TEST_HTTP_SERVER_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_NET_TEST_HTTP_SERVER_H_
+#define CHROME_TEST_QTWEBKITDRIVER_NET_TEST_HTTP_SERVER_H_
 
 #include <set>
 
@@ -96,4 +96,4 @@ class TestHttpServer : public net::HttpServer::Delegate {
   DISALLOW_COPY_AND_ASSIGN(TestHttpServer);
 };
 
-#endif  // CHROME_TEST_CHROMEDRIVER_NET_TEST_HTTP_SERVER_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_NET_TEST_HTTP_SERVER_H_

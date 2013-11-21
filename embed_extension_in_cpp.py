@@ -33,7 +33,7 @@ def main():
   string_buffer.close()
 
   cpp_source.WriteSource('embedded_automation_extension',
-                         'chrome/test/chromedriver/chrome',
+                         'chrome/test/qtwebkitdriver/chrome',
                          options.directory, global_string_map)
 
 

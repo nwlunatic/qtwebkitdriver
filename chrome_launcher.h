@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_LAUNCHER_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_LAUNCHER_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_LAUNCHER_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_LAUNCHER_H_
 
 #include <string>
 #include <vector>
@@ -11,8 +11,8 @@
 #include "base/files/file_path.h"
 #include "base/memory/scoped_ptr.h"
 #include "base/memory/scoped_vector.h"
-#include "chrome/test/chromedriver/capabilities.h"
-#include "chrome/test/chromedriver/net/sync_websocket_factory.h"
+#include "chrome/test/qtwebkitdriver/capabilities.h"
+#include "chrome/test/qtwebkitdriver/net/sync_websocket_factory.h"
 
 class CommandLine;
 class DevToolsEventListener;
@@ -51,4 +51,4 @@ Status PrepareUserDataDir(
     const base::DictionaryValue* custom_local_state);
 }  // namespace internal
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_LAUNCHER_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_LAUNCHER_H_

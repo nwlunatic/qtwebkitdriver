@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "chrome/test/chromedriver/element_util.h"
+#include "chrome/test/qtwebkitdriver/element_util.h"
 
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -12,11 +12,11 @@
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/basic_types.h"
-#include "chrome/test/chromedriver/chrome/js.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/chrome/web_view.h"
-#include "chrome/test/chromedriver/session.h"
+#include "chrome/test/qtwebkitdriver/basic_types.h"
+#include "chrome/test/qtwebkitdriver/chrome/js.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/web_view.h"
+#include "chrome/test/qtwebkitdriver/session.h"
 #include "third_party/webdriver/atoms.h"
 
 namespace {
@@ -642,7 +642,7 @@ Status ScrollElementRegionIntoView(
     base::ListValue args;
     args.AppendString(
         base::StringPrintf("//*[@cd_frame_id_ = '%s']",
-                           rit->chromedriver_frame_id.c_str()));
+                           rit->qtwebkitdriver_frame_id.c_str()));
     scoped_ptr<base::Value> result;
     status = web_view->CallFunction(
         rit->parent_frame_id, kFindSubFrameScript, args, &result);

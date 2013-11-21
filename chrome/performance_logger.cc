@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/chromedriver/chrome/performance_logger.h"
+#include "chrome/test/qtwebkitdriver/chrome/performance_logger.h"
 
 #include "base/json/json_writer.h"
 #include "base/strings/string_util.h"
 #include "base/values.h"
-#include "chrome/test/chromedriver/chrome/devtools_client.h"
-#include "chrome/test/chromedriver/chrome/log.h"
-#include "chrome/test/chromedriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/chrome/devtools_client.h"
+#include "chrome/test/qtwebkitdriver/chrome/log.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
 
 namespace {
 

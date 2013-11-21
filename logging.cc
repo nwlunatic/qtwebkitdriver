@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/chromedriver/logging.h"
+#include "chrome/test/qtwebkitdriver/logging.h"
 
 #include <stdio.h>
 
@@ -12,11 +12,11 @@
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
-#include "chrome/test/chromedriver/capabilities.h"
-#include "chrome/test/chromedriver/chrome/console_logger.h"
-#include "chrome/test/chromedriver/chrome/performance_logger.h"
-#include "chrome/test/chromedriver/chrome/status.h"
-#include "chrome/test/chromedriver/session.h"
+#include "chrome/test/qtwebkitdriver/capabilities.h"
+#include "chrome/test/qtwebkitdriver/chrome/console_logger.h"
+#include "chrome/test/qtwebkitdriver/chrome/performance_logger.h"
+#include "chrome/test/qtwebkitdriver/chrome/status.h"
+#include "chrome/test/qtwebkitdriver/session.h"
 
 #if defined(OS_POSIX)
 #include <fcntl.h>
@@ -209,8 +209,8 @@ bool InitLogging() {
 #endif
   }
 
-  // Turn on VLOG for chromedriver. This is parsed during logging::InitLogging.
-  cmd_line->AppendSwitchASCII("vmodule", "*/chrome/test/chromedriver/*=3");
+  // Turn on VLOG for qtwebkitdriver. This is parsed during logging::InitLogging.
+  cmd_line->AppendSwitchASCII("vmodule", "*/chrome/test/qtwebkitdriver/*=3");
 
   logging::SetMinLogLevel(logging::LOG_WARNING);
   logging::SetLogItems(false,   // enable_process_id

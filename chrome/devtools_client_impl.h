@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_CHROMEDRIVER_CHROME_DEVTOOLS_CLIENT_IMPL_H_
-#define CHROME_TEST_CHROMEDRIVER_CHROME_DEVTOOLS_CLIENT_IMPL_H_
+#ifndef CHROME_TEST_QTWEBKITDRIVER_CHROME_DEVTOOLS_CLIENT_IMPL_H_
+#define CHROME_TEST_QTWEBKITDRIVER_CHROME_DEVTOOLS_CLIENT_IMPL_H_
 
 #include <list>
 #include <map>
@@ -14,8 +14,8 @@
 #include "base/compiler_specific.h"
 #include "base/memory/linked_ptr.h"
 #include "base/memory/scoped_ptr.h"
-#include "chrome/test/chromedriver/chrome/devtools_client.h"
-#include "chrome/test/chromedriver/net/sync_websocket_factory.h"
+#include "chrome/test/qtwebkitdriver/chrome/devtools_client.h"
+#include "chrome/test/qtwebkitdriver/net/sync_websocket_factory.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -155,4 +155,4 @@ bool ParseInspectorMessage(
 
 }  // namespace internal
 
-#endif  // CHROME_TEST_CHROMEDRIVER_CHROME_DEVTOOLS_CLIENT_IMPL_H_
+#endif  // CHROME_TEST_QTWEBKITDRIVER_CHROME_DEVTOOLS_CLIENT_IMPL_H_
