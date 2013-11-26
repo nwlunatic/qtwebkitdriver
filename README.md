@@ -17,3 +17,27 @@ qtwebkitdriver
 
 + GYP_DEFINES="debug_extra_cflags=-g" ./build/gyp_chromium chrome/test/qtwebkitdriver/qtwebkitdriver.gyp
 + ninja -C out/Debug qtwebkitdriver
+
+# using driver
+
++ start driver binary
++ in your qt app make possible to enable qtwebinspector remote debugging protocol using commandline switch --inspect='port'
++ in desired_capabilities provide app to run and optional appOptions as list
+
+for example
+```python
+from selenium.webdriver import Remote
+
+desired_capabilities = {
+	'app': '/path/to/your/qt_application_binary',
+	'appOptions': {
+	  'some_switch',
+	  'another_switch'
+	}
+}
+
+driver = Remote(
+    command_executor='http://127.0.0.1:9515',
+    desired_capabilities=desired_capabilities
+)
+```
