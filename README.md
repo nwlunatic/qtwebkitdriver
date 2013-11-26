@@ -13,4 +13,7 @@ qtwebkitdriver
 + ./build/gyp_chromium chrome/test/qtwebkitdriver/qtwebkitdriver.gyp
 + ninja -C out/Release qtwebkitdriver
 
+# debugging (using gdb)
 
++ GYP_DEFINES="debug_extra_cflags=-g" ./build/gyp_chromium chrome/test/qtwebkitdriver/qtwebkitdriver.gyp
++ ninja -C out/Debug qtwebkitdriver
