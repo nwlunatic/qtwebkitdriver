@@ -3,33 +3,14 @@
 # found in the LICENSE file.
 {
   'variables' : {
-    'pyautolib_sources': [
-      'app/chrome_command_ids.h',
-      'app/chrome_dll_resource.h',
-      'common/automation_constants.h',
-      'common/pref_names.cc',
-      'common/pref_names.h',
-      'test/automation/browser_proxy.cc',
-      'test/automation/browser_proxy.h',
-      'test/automation/tab_proxy.cc',
-      'test/automation/tab_proxy.h',
-      '../content/public/common/page_type.h',
-      '../content/public/common/security_style.h',
-      # Must come before cert_status_flags.h
-      '../net/base/net_export.h',
-      '../net/cert/cert_status_flags.h',
-    ],
-    'conditions': [
-      ['asan==1', {
-        'pyautolib_sources': [
-          'test/pyautolib/asan_stub.c',
-        ]
-      }],
-    ],
+    'debug_extra_cflags%' : ''
   },
   'targets': [
     {
       'target_name': 'automation_client_lib',
+      'cflags': [
+        '<@(debug_extra_cflags)'
+      ],
       'type': 'static_library',
       'hard_dependency': 1,
       'dependencies': [
@@ -219,6 +200,9 @@
     },
     {
       'target_name': 'qtwebkitdriver_lib',
+      'cflags': [
+        '<@(debug_extra_cflags)'
+      ],
       'type': 'static_library',
       'hard_dependency': 1,
       'dependencies': [
@@ -307,6 +291,9 @@
     },
     {
       'target_name': 'qtwebkitdriver',
+      'cflags': [
+        '<@(debug_extra_cflags)'
+      ],
       'type': 'executable',
       'dependencies': [
         'qtwebkitdriver_lib',
