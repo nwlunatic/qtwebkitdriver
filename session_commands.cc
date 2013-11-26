@@ -33,6 +33,8 @@
 #include "chrome/test/qtwebkitdriver/util.h"
 #include "chrome/test/qtwebkitdriver/version.h"
 
+#include <iostream>
+
 namespace {
 
 const char kWindowHandlePrefix[] = "CDwindow-";
@@ -130,7 +132,7 @@ Status InitSessionHelper(
     return status;
 
 //  status = LaunchChrome(bound_params.context_getter.get(),
-  status = LaunchChrome(bound_params.context_getter.get(),
+  status = LaunchQtApplication(bound_params.context_getter.get(),
                         bound_params.socket_factory,
                         bound_params.device_manager,
                         bound_params.port_server,

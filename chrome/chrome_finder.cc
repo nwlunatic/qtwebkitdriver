@@ -121,25 +121,26 @@ bool FindChrome(base::FilePath* browser_exe) {
       browser_exe);
 }
 
-// TODO: add for OS_MACOSX and OS_WIN
-bool FindV4Desktop(base::FilePath* browser_exe) {
-#if defined(OS_WIN)
-  base::FilePath browser_exes_array[] = {
-      base::FilePath(L"Google\\Chrome\\Application\\chrome.exe"),
-      base::FilePath(L"Chromium\\Application\\chrome.exe")
-  };
-#elif defined(OS_MACOSX)
-  base::FilePath browser_exes_array[] = {
-      base::FilePath("Google Chrome.app/Contents/MacOS/Google Chrome"),
-      base::FilePath("Chromium.app/Contents/MacOS/Chromium")
-  };
-#elif defined(OS_LINUX)
-  base::FilePath browser_exes_array[] = {
-      base::FilePath("v4Desktop"),
-  };
-#endif
-  std::vector<base::FilePath> browser_exes(
-      browser_exes_array, browser_exes_array + arraysize(browser_exes_array));
+
+bool FindQtApplication(base::FilePath* browser_exe) {
+//#if defined(OS_WIN)
+//  base::FilePath browser_exes_array[] = {
+//      base::FilePath(L"Google\\Chrome\\Application\\chrome.exe"),
+//      base::FilePath(L"Chromium\\Application\\chrome.exe")
+//  };
+//#elif defined(OS_MACOSX)
+//  base::FilePath browser_exes_array[] = {
+//      base::FilePath("Google Chrome.app/Contents/MacOS/Google Chrome"),
+//      base::FilePath("Chromium.app/Contents/MacOS/Chromium")
+//  };
+//#elif defined(OS_LINUX)
+//  base::FilePath browser_exes_array[] = {
+//      base::FilePath("v4Desktop"),
+//  };
+//#endif
+//  std::vector<base::FilePath> browser_exes(
+//      browser_exes_array, browser_exes_array + arraysize(browser_exes_array));
+  std::vector<base::FilePath> browser_exes;
   std::vector<base::FilePath> locations;
   GetApplicationDirs(&locations);
   return internal::FindExe(

@@ -15,7 +15,7 @@ class FilePath;
 
 // Gets the path to the default Chrome executable. Returns true on success.
 bool FindChrome(base::FilePath* browser_exe);
-bool FindV4Desktop(base::FilePath* browser_exe);
+bool FindQtApplication(base::FilePath* browser_exe);
 
 namespace internal {
 

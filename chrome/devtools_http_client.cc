@@ -173,13 +173,13 @@ Status DevToolsHttpClient::GetQtWebKitWebViewsInfo(WebViewsInfo* views_info) {
 }
 
 Status DevToolsHttpClient::GetWebViewsInfo(WebViewsInfo* views_info) {
-  // return DevToolsHttpClient::GetQtWebKitWebViewsInfo(views_info);
+  return DevToolsHttpClient::GetQtWebKitWebViewsInfo(views_info);
   
-  std::string data;
-  if (!FetchUrlAndLog(server_url_ + "/json", context_getter_.get(), &data))
-    return Status(kChromeNotReachable);
-
-  return internal::ParseWebViewsInfo(data, views_info);
+//  std::string data;
+//  if (!FetchUrlAndLog(server_url_ + "/json", context_getter_.get(), &data))
+//    return Status(kChromeNotReachable);
+//
+//  return internal::ParseWebViewsInfo(data, views_info);
   
 }
 

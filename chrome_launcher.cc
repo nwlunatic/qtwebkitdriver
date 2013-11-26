@@ -78,9 +78,9 @@ Status PrepareCommandLine(int port,
   base::FilePath program = capabilities.binary;
   if (program.empty()) {
     //if (!FindChrome(&program))
-    if (!FindV4Desktop(&program))
+    if (!FindQtApplication(&program))
       //return Status(kUnknownError, "cannot find Chrome binary");
-      return Status(kUnknownError, "cannot find v4Desktop binary");
+      return Status(kUnknownError, "cannot find qt application binary");
   } else if (!base::PathExists(program)) {
     return Status(kUnknownError,
                   base::StringPrintf("no chrome binary at %" PRFilePath,
@@ -92,8 +92,8 @@ Status PrepareCommandLine(int port,
   
   // TODO(chrisgao): Add "disable-sync" when chrome 30- is not supported.
   // For chrome 30-, it leads to crash when opening chrome://settings.
-  for (size_t i = 0; i < arraysize(kCommonSwitches); ++i)
-    switches.SetSwitch(kCommonSwitches[i]);
+//  for (size_t i = 0; i < arraysize(kCommonSwitches); ++i)
+//    switches.SetSwitch(kCommonSwitches[i]);
   /*
   switches.SetSwitch("disable-hang-monitor");
   switches.SetSwitch("disable-prompt-on-repost");
@@ -112,8 +112,8 @@ Status PrepareCommandLine(int port,
   switches.SetSwitch("use-mock-keychain");
   switches.SetSwitch("remote-debugging-port", base::IntToString(port));
   */
-  switches.SetSwitch("inspect", base::IntToString(port)); 
-
+  switches.SetSwitch("inspect", base::IntToString(port));
+  
   for (std::set<std::string>::const_iterator iter =
            capabilities.exclude_switches.begin();
        iter != capabilities.exclude_switches.end();
@@ -279,7 +279,7 @@ Status LaunchExistingChromeSession(
   return Status(kOk);
 }
 
-Status LaunchDesktopChrome(
+Status LaunchDesktopQtApplication(
 //Status LaunchAndroidChrome(
     URLRequestContextGetter* context_getter,
     int port,
@@ -315,7 +315,7 @@ Status LaunchDesktopChrome(
 #else
   std::string command_string = command.GetCommandLineString();
 #endif
-  VLOG(0) << "Launching chrome: " << command_string;
+  VLOG(0) << "Launching application: " << command_string;
   base::ProcessHandle process;
   /*
   for (size_t i = 0; i < command.size(); i++) {
@@ -323,7 +323,7 @@ Status LaunchDesktopChrome(
   }
   */
   
-  std::vector<std::string> argv = command.argv();  
+  std::vector<std::string> argv = command.argv();
   std::cout << "!!!!!! argv size:" << argv.size() << std::endl;
   for(unsigned int i = 0; i < argv.size(); i++) {
       std::cout << argv[i] << " ";
@@ -451,127 +451,7 @@ Status LaunchAndroidChrome(
 }  // namespace
 
 
-Status Launch2GisDesktop(
-    URLRequestContextGetter* context_getter,
-    int port,
-    scoped_ptr<PortReservation> port_reservation,
-    const SyncWebSocketFactory& socket_factory,
-    const Capabilities& capabilities,
-    ScopedVector<DevToolsEventListener>& devtools_event_listeners,
-    scoped_ptr<Chrome>* chrome) {
-  CommandLine command(CommandLine::NO_PROGRAM);
-  base::ScopedTempDir user_data_dir;
-  base::ScopedTempDir extension_dir;
-  std::vector<std::string> extension_bg_pages;
-  Status status = PrepareCommandLine(port,
-                                     capabilities,
-                                     &command,
-                                     &user_data_dir,
-                                     &extension_dir,
-                                     &extension_bg_pages);
-  if (status.IsError())
-    return status;
-  
-  base::LaunchOptions options;
-
-#if !defined(OS_WIN)
-  if (!capabilities.log_path.empty())
-    options.environ["CHROME_LOG_FILE"] = capabilities.log_path;
-  if (capabilities.detach)
-    options.new_process_group = true;
-#endif
-
-#if defined(OS_WIN)
-  std::string command_string = base::WideToUTF8(command.GetCommandLineString());
-#else
-  std::string command_string = command.GetCommandLineString();
-#endif
-  VLOG(0) << "Launching chrome: " << command_string;
-  base::ProcessHandle process;
-  /*
-  for (size_t i = 0; i < command.size(); i++) {
-      std::cout << command[i] << std::endl;
-  }
-  */
-  
-  std::vector<std::string> argv = command.argv();  
-  std::cout << "!!!!!! argv size:" << argv.size() << std::endl;
-  for(unsigned int i = 0; i < argv.size(); i++) {
-      std::cout << argv[i] << " ";
-  }
-  std::cout << std::endl;
-  
-  if (!base::LaunchProcess(command, options, &process))
-    return Status(kUnknownError, "chrome failed to start");
-  
-  std::cout << "***Process Launched" << std::endl;
-
-  scoped_ptr<DevToolsHttpClient> devtools_client;
-  
-  status = WaitForDevToolsAndCheckVersion(
-      NetAddress(port), context_getter, socket_factory, &devtools_client);
-  
-  std::cout << "***DevTools_client status" << status.message() << std::endl;
-  
-  if (status.IsError()) {
-    int exit_code;
-    base::TerminationStatus chrome_status =
-        base::GetTerminationStatus(process, &exit_code);
-    if (chrome_status != base::TERMINATION_STATUS_STILL_RUNNING) {
-      std::string termination_reason;
-      switch (chrome_status) {
-        case base::TERMINATION_STATUS_NORMAL_TERMINATION:
-          termination_reason = "exited normally";
-          break;
-        case base::TERMINATION_STATUS_ABNORMAL_TERMINATION:
-          termination_reason = "exited abnormally";
-          break;
-        case base::TERMINATION_STATUS_PROCESS_WAS_KILLED:
-          termination_reason = "was killed";
-          break;
-        case base::TERMINATION_STATUS_PROCESS_CRASHED:
-          termination_reason = "crashed";
-          break;
-        default:
-          termination_reason = "unknown";
-          break;
-      }
-      return Status(kUnknownError,
-                    "Chrome failed to start: " + termination_reason);
-    }
-    if (!base::KillProcess(process, 0, true)) {
-      int exit_code;
-      if (base::GetTerminationStatus(process, &exit_code) ==
-          base::TERMINATION_STATUS_STILL_RUNNING)
-        return Status(kUnknownError, "cannot kill Chrome", status);
-    }
-    return status;
-  }
-  scoped_ptr<ChromeDesktopImpl> chrome_desktop(
-      new ChromeDesktopImpl(devtools_client.Pass(),
-                            devtools_event_listeners,
-                            port_reservation.Pass(),
-                            process,
-                            command,
-                            &user_data_dir,
-                            &extension_dir));
-  for (size_t i = 0; i < extension_bg_pages.size(); ++i) {
-    VLOG(0) << "Waiting for extension bg page load: " << extension_bg_pages[i];
-    scoped_ptr<WebView> web_view;
-    Status status = chrome_desktop->WaitForPageToLoad(
-        extension_bg_pages[i], base::TimeDelta::FromSeconds(10), &web_view);
-    if (status.IsError()) {
-      return Status(kUnknownError,
-                    "failed to wait for extension background page to load: " +
-                        extension_bg_pages[i],
-                    status);
-    }
-  }
-  *chrome = chrome_desktop.Pass();
-  return Status(kOk);
-}
-
-Status LaunchChrome(
+Status LaunchQtApplication(
     URLRequestContextGetter* context_getter,
     const SyncWebSocketFactory& socket_factory,
     DeviceManager* device_manager,
@@ -580,11 +460,11 @@ Status LaunchChrome(
     const Capabilities& capabilities,
     ScopedVector<DevToolsEventListener>& devtools_event_listeners,
     scoped_ptr<Chrome>* chrome) {
-  if (capabilities.IsExistingBrowser()) {
-    return LaunchExistingChromeSession(
-        context_getter, socket_factory,
-        capabilities, devtools_event_listeners, chrome);
-  }
+//  if (capabilities.IsExistingBrowser()) {
+//    return LaunchExistingChromeSession(
+//        context_getter, socket_factory,
+//        capabilities, devtools_event_listeners, chrome);
+//  }
 
   int port = 0;
   scoped_ptr<PortReservation> port_reservation;
@@ -594,26 +474,25 @@ Status LaunchChrome(
   else
     port_status = port_manager->ReservePort(&port, &port_reservation);
   if (port_status.IsError())
-    return Status(kUnknownError, "cannot reserve port for Chrome", port_status);
+    return Status(kUnknownError, "cannot reserve port for App", port_status);
 
-  if (capabilities.IsAndroid()) {
-    return LaunchAndroidChrome(context_getter,
-                               port,
-                               port_reservation.Pass(),
-                               socket_factory,
-                               capabilities,
-                               devtools_event_listeners,
-                               device_manager,
-                               chrome);
-  } else {
-    return LaunchDesktopChrome(context_getter,
-                               port,
-                               port_reservation.Pass(),
-                               socket_factory,
-                               capabilities,
-                               devtools_event_listeners,
-                               chrome);
-  }
+//  if (capabilities.IsAndroid()) {
+//    return LaunchAndroidChrome(context_getter,
+//                               port,
+//                               port_reservation.Pass(),
+//                               socket_factory,
+//                               capabilities,
+//                               devtools_event_listeners,
+//                               device_manager,
+//                               chrome);
+//  } else {
+  return LaunchDesktopQtApplication(context_getter,
+                             port,
+                             port_reservation.Pass(),
+                             socket_factory,
+                             capabilities,
+                             devtools_event_listeners,
+                             chrome);
 }
 
 namespace internal {

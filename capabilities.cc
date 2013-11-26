@@ -284,7 +284,7 @@ Status ParseChromeOptions(
     parser_map["debuggerAddress"] = base::Bind(&ParseUseExistingBrowser);
   } else {
     parser_map["args"] = base::Bind(&ParseSwitches);
-    parser_map["binary"] = base::Bind(&ParseFilePath, &capabilities->binary);
+    parser_map["app"] = base::Bind(&ParseFilePath, &capabilities->binary);
     parser_map["detach"] = base::Bind(&ParseBoolean, &capabilities->detach);
     parser_map["excludeSwitches"] = base::Bind(&ParseExcludeSwitches);
     parser_map["extensions"] = base::Bind(&ParseExtensions);
@@ -435,9 +435,15 @@ bool Capabilities::IsExistingBrowser() const {
 }
 
 Status Capabilities::Parse(const base::DictionaryValue& desired_caps) {
+  if(!desired_caps.HasKey("app")) {
+      return Status(
+            kUnknownError, "provide app desired capability");
+  }
+    
   std::map<std::string, Parser> parser_map;
-  parser_map["chromeOptions"] = base::Bind(&ParseChromeOptions);
-  parser_map["loggingPrefs"] = base::Bind(&ParseLoggingPrefs);
+  parser_map["app"] = base::Bind(&ParseFilePath, &this->binary);
+  parser_map["appOptions"] = base::Bind(&ParseSwitches);
+//  parser_map["loggingPrefs"] = base::Bind(&ParseLoggingPrefs);
   parser_map["proxy"] = base::Bind(&ParseProxy);
   for (std::map<std::string, Parser>::iterator it = parser_map.begin();
        it != parser_map.end(); ++it) {
@@ -449,6 +455,6 @@ Status Capabilities::Parse(const base::DictionaryValue& desired_caps) {
             kUnknownError, "cannot parse capability: " + it->first, status);
       }
     }
-  }
+  } 
   return Status(kOk);
 }
