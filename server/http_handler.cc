@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <iostream>
-
 #include "chrome/test/qtwebkitdriver/server/http_handler.h"
 
 #include "base/bind.h"
@@ -580,7 +578,6 @@ void HttpHandler::HandleCommand(
     const net::HttpServerRequestInfo& request,
     const std::string& trimmed_path,
     const HttpResponseSenderFunc& send_response_func) {
-  std::cout << "***entering HttpHandler::HandleCommand" << std::endl;
   base::DictionaryValue params;
   std::string session_id;
   CommandMap::const_iterator iter = command_map_->begin();
@@ -599,8 +596,6 @@ void HttpHandler::HandleCommand(
     ++iter;
   }
 
-  std::cout << trimmed_path << std::endl;
-  
   if (request.data.length()) {
     base::DictionaryValue* body_params;
     scoped_ptr<base::Value> parsed_body(base::JSONReader::Read(request.data));
@@ -709,9 +704,6 @@ bool MatchesCommand(const std::string& method,
                     base::DictionaryValue* out_params) {
   if (!MatchesMethod(command.method, method))
     return false;
-
-  std::cout << "method: " << command.method << ", " << "path_pattern: " << command.path_pattern << std::endl;
-  std::cout << method << ", " << path << ", " << session_id << ", " << out_params << std::endl;
   
   std::vector<std::string> path_parts;
   base::SplitString(path, '/', &path_parts);

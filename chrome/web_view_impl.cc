@@ -25,8 +25,6 @@
 #include "chrome/test/qtwebkitdriver/chrome/status.h"
 #include "chrome/test/qtwebkitdriver/chrome/ui_events.h"
 
-#include <iostream>
-
 namespace {
 
 Status GetContextIdForFrame(FrameTracker* tracker,
@@ -99,13 +97,10 @@ const char* GetAsString(MouseButton button) {
 Status IsNotPendingNavigation(NavigationTracker* tracker,
                               const std::string& frame_id,
                               bool* is_not_pending) {
-  std::cout << "*** entering IsNotPendingNavigation " << frame_id << " " << *is_not_pending << std::endl;
   bool is_pending;
   Status status = tracker->IsPendingNavigation(frame_id, &is_pending);
-  std::cout << "*** tracker->IsPendingNavigation status: " << status.message() << std::endl;
   if (status.IsError())
     return status;
-  std::cout << "*** is_pending: " << is_pending << std::endl;
   *is_not_pending = !is_pending;
   return Status(kOk);
 }
@@ -375,7 +370,6 @@ Status WebViewImpl::DeleteCookie(const std::string& name,
 Status WebViewImpl::WaitForPendingNavigations(const std::string& frame_id,
                                               const base::TimeDelta& timeout,
                                               bool stop_load_on_timeout) {
-  std::cout << "*** entering WaitForPendingNavigations" << std::endl;
   VLOG(0) << "Waiting for pending navigations...";
   Status status = client_->HandleEventsUntil(
       base::Bind(&WebViewImpl::IsNotPendingNavigation,
@@ -394,7 +388,6 @@ Status WebViewImpl::WaitForPendingNavigations(const std::string& frame_id,
       status = new_status;
   }
   VLOG(0) << "Done waiting for pending navigations";
-  std::cout << "*** exiting WaitForPendingNavigations" << std::endl;
   return status;
 }
 

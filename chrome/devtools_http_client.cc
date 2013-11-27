@@ -21,8 +21,6 @@
 #include "chrome/test/qtwebkitdriver/net/net_util.h"
 #include "chrome/test/qtwebkitdriver/net/url_request_context_getter.h"
 
-#include <iostream>
-
 namespace {
 
 Status FakeCloseFrontends() {
@@ -154,7 +152,6 @@ Status DevToolsHttpClient::Init(const base::TimeDelta& timeout) {
 }
 
 Status DevToolsHttpClient::GetQtWebKitWebViewsInfo(WebViewsInfo* views_info) {
-    std::cout << "*** entering GetQtWebKitWebViewsInfo" << std::endl;
   std::string data;
   if (!FetchUrl(server_url_, context_getter_, &data))
     return Status(kChromeNotReachable);
@@ -165,10 +162,8 @@ Status DevToolsHttpClient::GetQtWebKitWebViewsInfo(WebViewsInfo* views_info) {
 \"url\": \"ufs:///start.html\",\
 \"webSocketDebuggerUrl\": \"%s%d\"\
 }]", this->web_socket_url_prefix_.c_str(), 1);
-  std::cout << "***GetQtWebKitWebViewsInfo data: " << data << std::endl;
   
   Status status = internal::ParseWebViewsInfo(data, views_info);
-  std::cout << status.message() << std::endl;
   return status;
 }
 
@@ -234,7 +229,6 @@ int DevToolsHttpClient::build_no() const {
 }
 
 Status DevToolsHttpClient::CloseFrontends(const std::string& for_client_id) {
-  std::cout << "*** CloseFrontends" << std::endl;
   WebViewsInfo views_info;
   Status status = GetWebViewsInfo(&views_info);
   if (status.IsError())
@@ -353,9 +347,7 @@ Status ParseWebViewsInfo(const std::string& data,
       return Status(kUnknownError, "DevTools did not include url");
     std::string debugger_url;
     info->GetString("webSocketDebuggerUrl", &debugger_url);
-    std::cout << "*** id:" << id << std::endl;
-    std::cout << "*** debugger_url:" << debugger_url << std::endl;
-    std::cout << "*** url:" << url << std::endl;
+    
     WebViewInfo::Type type;
     if (type_as_string == "app")
       type = WebViewInfo::kApp;

@@ -13,8 +13,6 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
 
-#include <iostream>
-
 SyncWebSocketImpl::SyncWebSocketImpl(
     net::URLRequestContextGetter* context_getter)
     : core_(new Core(context_getter)) {}
@@ -53,7 +51,6 @@ bool SyncWebSocketImpl::Core::IsConnected() {
 }
 
 bool SyncWebSocketImpl::Core::Connect(const GURL& url) {
-    std::cout << "*** GURL: " << url << std::endl;
   bool success = false;
   base::WaitableEvent event(false, false);
   context_getter_->GetNetworkTaskRunner()->PostTask(
@@ -118,7 +115,6 @@ void SyncWebSocketImpl::Core::ConnectOnIO(
     const GURL& url,
     bool* success,
     base::WaitableEvent* event) {
-  std::cout << "*** entering ConnectOnIO" << std::endl;
   {
     base::AutoLock lock(lock_);
     received_queue_.clear();
@@ -133,10 +129,8 @@ void SyncWebSocketImpl::Core::OnConnectCompletedOnIO(
     bool* success,
     base::WaitableEvent* event,
     int error) {
-  std::cout << "*** entering OnConnectCompletedOnIO" << std::endl;
   *success = (error == net::OK);
   if (*success) {
-    std::cout << "*** entering OnConnectCompletedOnIO success" << std::endl;
     base::AutoLock lock(lock_);
     is_connected_ = true;
   }

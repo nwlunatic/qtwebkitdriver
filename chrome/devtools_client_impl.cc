@@ -17,8 +17,6 @@
 #include "chrome/test/qtwebkitdriver/net/sync_websocket.h"
 #include "chrome/test/qtwebkitdriver/net/url_request_context_getter.h"
 
-#include <iostream>
-
 namespace {
 
 const char* kInspectorContextError =
@@ -204,11 +202,9 @@ Status DevToolsClientImpl::HandleEventsUntil(
   base::TimeTicks deadline = base::TimeTicks::Now() + timeout;
   base::TimeDelta next_message_timeout = timeout;
   while (true) {
-    std::cout << "*** while(true)" << std::endl;
     if (!socket_->HasNextMessage()) {
       bool is_condition_met = false;
       Status status = conditional_func.Run(&is_condition_met);
-      std::cout << "*** is_condition_met " << is_condition_met << std::endl;
       if (status.IsError())
         return status;
       if (is_condition_met)
@@ -275,7 +271,6 @@ Status DevToolsClientImpl::SendCommandInternal(
 Status DevToolsClientImpl::ProcessNextMessage(
     int expected_id,
     const base::TimeDelta& timeout) {
-  std::cout << "*** entering DevToolsClientImpl::ProcessNextMessage" << std::endl;
   ScopedIncrementer increment_stack_count(&stack_count_);
   
   Status status = EnsureListenersNotifiedOfConnect();

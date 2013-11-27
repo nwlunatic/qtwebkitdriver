@@ -33,8 +33,6 @@
 #include "chrome/test/qtwebkitdriver/util.h"
 #include "chrome/test/qtwebkitdriver/version.h"
 
-#include <iostream>
-
 namespace {
 
 const char kWindowHandlePrefix[] = "CDwindow-";

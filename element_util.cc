@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <iostream>
-
 #include "chrome/test/qtwebkitdriver/element_util.h"
 
 #include "base/strings/string_number_conversions.h"
@@ -230,7 +228,6 @@ Status FindElement(
     WebView* web_view,
     const base::DictionaryValue& params,
     scoped_ptr<base::Value>* value) {
-  std::cout << "**** FindElement" << std::endl;
   
   std::string strategy;
   if (!params.GetString("using", &strategy))

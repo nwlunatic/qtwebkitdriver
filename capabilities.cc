@@ -5,7 +5,6 @@
 #include "chrome/test/qtwebkitdriver/capabilities.h"
 
 #include <map>
-#include <iostream>
 
 #include "base/bind.h"
 #include "base/callback.h"

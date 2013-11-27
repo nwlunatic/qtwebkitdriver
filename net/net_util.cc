@@ -17,8 +17,6 @@
 #include "net/url_request/url_fetcher_delegate.h"
 #include "url/gurl.h"
 
-#include <iostream>
-
 namespace {
 
 class SyncUrlFetcher : public net::URLFetcherDelegate {
@@ -39,7 +37,6 @@ class SyncUrlFetcher : public net::URLFetcherDelegate {
   }
 
   void FetchOnIOThread() {
-      std::cout << "*** entering FetchOnIOThread" << std::endl;
     fetcher_.reset(net::URLFetcher::Create(url_, net::URLFetcher::GET, this));
     fetcher_->SetRequestContext(getter_);
     fetcher_->Start();

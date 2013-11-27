@@ -25,7 +25,6 @@
 #include "chrome/test/qtwebkitdriver/util.h"
 #include "third_party/webdriver/atoms.h"
 
-#include "iostream"
 #include "window_commands.h"
 
 namespace {

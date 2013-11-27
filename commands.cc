@@ -34,8 +34,6 @@
 #include "chrome/test/qtwebkitdriver/session_thread_map.h"
 #include "chrome/test/qtwebkitdriver/util.h"
 
-#include <iostream>
-
 void ExecuteGetStatus(
     const base::DictionaryValue& params,
     const std::string& session_id,

@@ -27,8 +27,6 @@
 #include "chrome/test/qtwebkitdriver/session.h"
 #include "chrome/test/qtwebkitdriver/util.h"
 
-#include <iostream>
-
 namespace {
 
 Status GetMouseButton(const base::DictionaryValue& params,
@@ -193,7 +191,6 @@ Status ExecuteWindowCommand(
     Session* session,
     const base::DictionaryValue& params,
     scoped_ptr<base::Value>* value) {
-  std::cout << "*** entering ExecuteWindowCommand" << std::endl;
   WebView* web_view = NULL;
   Status status = session->GetTargetWindow(&web_view);
   if (status.IsError())
@@ -212,7 +209,6 @@ Status ExecuteWindowCommand(
 
   Status nav_status(kOk);
   for (int attempt = 0; attempt < 2; attempt++) {
-    std::cout << "*** attempt: " <<  attempt << std::endl;
     if (attempt == 1) {
       if (status.code() == kNoSuchExecutionContext)
         // Switch to main frame and retry command if subframe no longer exists.
@@ -220,15 +216,11 @@ Status ExecuteWindowCommand(
       else
         break;
     }
-    std::cout << "*** before nav_status" << std::endl;
     nav_status = web_view->WaitForPendingNavigations(
         session->GetCurrentFrameId(), session->page_load_timeout, true);
-    std::cout << "*** after nav_status" << std::endl;
     if (nav_status.IsError())
       return nav_status;
-    std::cout << "*** before command.Run" << std::endl;
     status = command.Run(session, web_view, params, value);
-    std::cout << "*** after command.Run" << std::endl;
   }
 
   nav_status = web_view->WaitForPendingNavigations(

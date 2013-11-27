@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <iostream>
-
 #include "chrome/test/qtwebkitdriver/chrome_launcher.h"
 #include <algorithm>
 #include <vector>
@@ -186,47 +184,6 @@ Status ParseAndCheckVersion(const std::string& devtools_version,
   return Status(kOk);
 }
 
-//Status WaitForDevToolsAndCheckVersion(
-//    int port,
-//    URLRequestContextGetter* context_getter,
-//    const SyncWebSocketFactory& socket_factory,
-//    scoped_ptr<DevToolsHttpClient>* user_client,
-//    std::string* version,
-//    int* build_no) {
-//  std::cout << "***DevToolsPort:" << port << std::endl;
-//  scoped_ptr<DevToolsHttpClient> client(new DevToolsHttpClient(
-//      port, context_getter, socket_factory));
-//
-//  base::Time deadline = base::Time::Now() + base::TimeDelta::FromSeconds(20);
-//  std::string devtools_version;
-//  Status status(kOk);
-//  while (base::Time::Now() < deadline) {
-//    status = client->GetVersion(&devtools_version);
-//    if (status.IsOk())
-//      break;
-//    if (status.code() != kChromeNotReachable)
-//      return status;
-//    base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(100));
-//  }
-//  if (status.IsError())
-//    return status;
-//  status = ParseAndCheckVersion(devtools_version, version, build_no);
-//  if (status.IsError())
-//    return status;
-//
-//  while (base::Time::Now() < deadline) {
-//    WebViewsInfo views_info;
-//    client->GetWebViewsInfo(&views_info);
-//    if (views_info.GetSize()) {
-//      *user_client = client.Pass();
-//      return Status(kOk);
-//    }
-//    base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(100));
-//  }
-//  return Status(kUnknownError, "unable to discover open pages");
-//}
-
-
 Status WaitForDevToolsAndCheckVersion(
     const NetAddress& address,
     URLRequestContextGetter* context_getter,
@@ -317,29 +274,13 @@ Status LaunchDesktopQtApplication(
 #endif
   VLOG(0) << "Launching application: " << command_string;
   base::ProcessHandle process;
-  /*
-  for (size_t i = 0; i < command.size(); i++) {
-      std::cout << command[i] << std::endl;
-  }
-  */
-  
-  std::vector<std::string> argv = command.argv();
-  std::cout << "!!!!!! argv size:" << argv.size() << std::endl;
-  for(unsigned int i = 0; i < argv.size(); i++) {
-      std::cout << argv[i] << " ";
-  }
-  std::cout << std::endl;
   
   if (!base::LaunchProcess(command, options, &process))
     return Status(kUnknownError, "chrome failed to start");
   
-  std::cout << "***Process Launched" << std::endl;
-
   scoped_ptr<DevToolsHttpClient> devtools_client;
   status = WaitForDevToolsAndCheckVersion(
       NetAddress(port), context_getter, socket_factory, &devtools_client);
-
-  std::cout << "***DevTools_client status" << status.message() << std::endl;
   
   if (status.IsError()) {
     int exit_code;

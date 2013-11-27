@@ -6,10 +6,9 @@
 
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
+#include "base/logging.h"
 #include "chrome/test/qtwebkitdriver/chrome/devtools_client.h"
 #include "chrome/test/qtwebkitdriver/chrome/status.h"
-
-#include <iostream>
 
 NavigationTracker::NavigationTracker(DevToolsClient* client)
     : client_(client),
@@ -28,9 +27,7 @@ NavigationTracker::~NavigationTracker() {}
 
 Status NavigationTracker::IsPendingNavigation(const std::string& frame_id,
                                               bool* is_pending) {
-  std::cout << "*** entering NavigationTracker::IsPendingNavigation" << std::endl;
   if (loading_state_ == kUnknown) {
-    std::cout << "*** loading_state_ == kUnknown" << std::endl;
     // If the loading state is unknown (which happens after first connecting),
     // force loading to start and set the state to loading. This will
     // cause a frame start event to be received, and the frame stop event
@@ -54,7 +51,6 @@ Status NavigationTracker::IsPendingNavigation(const std::string& frame_id,
     scoped_ptr<base::DictionaryValue> result;
     Status status = client_->SendCommandAndGetResult(
         "Runtime.evaluate", params, &result);
-    std::cout << "*** SendCommandAndGetResult status: " << status.message() << std::endl;
     if (status.IsError())
       return Status(kUnknownError, "cannot determine loading status", status);
 
@@ -65,13 +61,12 @@ Status NavigationTracker::IsPendingNavigation(const std::string& frame_id,
     if (loading_state_ == kUnknown)
       loading_state_ = kLoading;
   }
-  std::cout << "*** is pending parts: " << (loading_state_ == kLoading) << " " << (scheduled_frame_set_.count(frame_id) > 0) << std::endl;
+  VLOG(1) << "*** is loading or pending frames: " << (loading_state_ == kLoading) << " " << (scheduled_frame_set_.count(frame_id) > 0) << " " << (scheduled_frame_set_.size() > 0);
   *is_pending = loading_state_ == kLoading;
   if (frame_id.empty())
     *is_pending |= scheduled_frame_set_.size() > 0;
   else
     *is_pending |= scheduled_frame_set_.count(frame_id) > 0;
-  std::cout << "*** is_pending: " << *is_pending << std::endl;
   return Status(kOk);
 }
 
@@ -87,13 +82,12 @@ Status NavigationTracker::OnConnected(DevToolsClient* client) {
 Status NavigationTracker::OnEvent(DevToolsClient* client,
                                   const std::string& method,
                                   const base::DictionaryValue& params) {
-  std::cout << "*** entering NavigationTracker::OnEvent" << std::endl;
   // Chrome does not send Page.frameStoppedLoading until all frames have
   // run their onLoad handlers (including frames created during the handlers).
   // When it does, it only sends one stopped event for all frames.
   if (method == "Page.frameStartedLoading") {
     loading_state_ = kLoading;
-  //} else if (method == "Page.frameStoppedLoading") {
+//  } else if (method == "Page.frameStoppedLoading") {
   } else if (method == "Page.loadEventFired") {
     loading_state_ = kNotLoading;
   } else if (method == "Page.frameScheduledNavigation") {
@@ -124,6 +118,7 @@ Status NavigationTracker::OnEvent(DevToolsClient* client,
     // received when navigating.
     // See crbug.com/180742.
     const base::Value* unused_value;
+    loading_state_ = kNotLoading;
     if (!params.Get("frame.parentId", &unused_value))
       scheduled_frame_set_.clear();
   } else if (method == "Inspector.targetCrashed") {

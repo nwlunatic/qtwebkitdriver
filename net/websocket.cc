@@ -24,8 +24,6 @@
 #include "net/http/http_util.h"
 #include "net/websockets/websocket_frame.h"
 
-#include <iostream>
-
 #if defined(OS_WIN)
 #include <Winsock2.h>
 #endif
@@ -118,13 +116,10 @@ bool WebSocket::Send(const std::string& message) {
 }
 
 void WebSocket::OnSocketConnect(int code) {
-  std::cout << "*** entering OnSocketConnect" << std::endl;
   if (code != net::OK) {
     Close(code);
     return;
   }
-
-  std::cout << "*** OnSocketConnect is ok" << std::endl;
   
   CHECK(base::Base64Encode(base::RandBytesAsString(16), &sec_key_));
   std::string handshake = base::StringPrintf(
