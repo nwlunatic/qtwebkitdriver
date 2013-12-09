@@ -102,6 +102,9 @@ class WebView {
   virtual Status DispatchMouseEvents(const std::list<MouseEvent>& events,
                                      const std::string& frame) = 0;
 
+  virtual Status DispatchJsMouseEvents(const std::list<MouseEvent>& events,
+                                       const std::string& frame) = 0;
+  
   // Dispatch an old mouse click.
   virtual Status SendMouseClickJSONRequestDeprecated(const std::list<MouseEvent>& events) = 0;
 

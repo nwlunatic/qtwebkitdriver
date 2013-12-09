@@ -504,6 +504,10 @@ Status ExecuteMouseClick(
       MouseEvent(kReleasedMouseEventType, button,
                  session->mouse_position.x, session->mouse_position.y,
                  session->sticky_modifiers, 1));
+  events.push_back(
+      MouseEvent(kClickedMouseEventType, button,
+                 session->mouse_position.x, session->mouse_position.y,
+                 session->sticky_modifiers, 1));
   return web_view->DispatchMouseEvents(events, session->GetCurrentFrameId());
 }
 
@@ -554,11 +558,27 @@ Status ExecuteMouseDoubleClick(
   events.push_back(
       MouseEvent(kPressedMouseEventType, button,
                  session->mouse_position.x, session->mouse_position.y,
-                 session->sticky_modifiers, 2));
+                 session->sticky_modifiers, 1));
   events.push_back(
       MouseEvent(kReleasedMouseEventType, button,
                  session->mouse_position.x, session->mouse_position.y,
-                 session->sticky_modifiers, 2));
+                 session->sticky_modifiers, 1));
+  events.push_back(
+      MouseEvent(kClickedMouseEventType, button,
+                 session->mouse_position.x, session->mouse_position.y,
+                 session->sticky_modifiers, 1));
+  events.push_back(
+      MouseEvent(kPressedMouseEventType, button,
+                 session->mouse_position.x, session->mouse_position.y,
+                 session->sticky_modifiers, 1));
+  events.push_back(
+      MouseEvent(kReleasedMouseEventType, button,
+                 session->mouse_position.x, session->mouse_position.y,
+                 session->sticky_modifiers, 1));
+  events.push_back(
+      MouseEvent(kDblClickedMouseEventType, button,
+                 session->mouse_position.x, session->mouse_position.y,
+                 session->sticky_modifiers, 1));
   return web_view->DispatchMouseEvents(events, session->GetCurrentFrameId());
 }
 

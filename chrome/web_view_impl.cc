@@ -43,11 +43,18 @@ Status GetContextIdForFrame(FrameTracker* tracker,
 const char* GetAsString(MouseEventType type) {
   switch (type) {
     case kPressedMouseEventType:
-      return "mousePressed";
+//      return "mousePressed";
+      return "mousedown";
     case kReleasedMouseEventType:
-      return "mouseReleased";
+//      return "mouseReleased";
+      return "mouseup";
     case kMovedMouseEventType:
-      return "mouseMoved";
+//      return "mouseMoved";
+      return "mousemove";
+    case kClickedMouseEventType:
+      return "click";
+    case kDblClickedMouseEventType:
+      return "dblclick";
     default:
       return "";
   }
@@ -241,19 +248,20 @@ Status WebViewImpl::GetFrameByFunction(const std::string& frame,
   return dom_tracker_->GetFrameIdForNode(node_id, out_frame);
 }
 
-Status WebViewImpl::DispatchMouseEvents(const std::list<MouseEvent>& events,
+Status WebViewImpl::DispatchJsMouseEvents(const std::list<MouseEvent>& events,
                                         const std::string& frame) {
   for (std::list<MouseEvent>::const_iterator it = events.begin();
        it != events.end(); ++it) {
-    base::DictionaryValue params;
-    params.SetString("type", GetAsString(it->type));
-    params.SetInteger("x", it->x);
-    params.SetInteger("y", it->y);
-    params.SetInteger("modifiers", it->modifiers);
-    params.SetString("button", GetAsString(it->button));
-    params.SetInteger("clickCount", it->click_count);
-    Status status = client_->SendCommand("Input.dispatchMouseEvent", params);
-    //Status status = client_->SendCommand("WebkitMouseClick", params);
+    base::ListValue args;
+    args.AppendString(GetAsString(it->type));
+    args.AppendInteger(it->x);
+    args.AppendInteger(it->y);
+    args.AppendInteger(it->modifiers);
+    args.AppendInteger(it->button);
+    args.AppendInteger(it->click_count);
+    scoped_ptr<base::Value> result;
+    Status status = CallFunction(
+          frame, kDispatchMouseEventScript, args, &result);
     if (status.IsError())
       return status;
     if (build_no_ < 1569 && it->button == kRightMouseButton &&
@@ -262,7 +270,6 @@ Status WebViewImpl::DispatchMouseEvents(const std::list<MouseEvent>& events,
       args.AppendInteger(it->x);
       args.AppendInteger(it->y);
       args.AppendInteger(it->modifiers);
-      scoped_ptr<base::Value> result;
       status = CallFunction(
           frame, kDispatchContextMenuEventScript, args, &result);
       if (status.IsError())
@@ -271,6 +278,42 @@ Status WebViewImpl::DispatchMouseEvents(const std::list<MouseEvent>& events,
   }
   return Status(kOk);
 }
+
+Status WebViewImpl::DispatchMouseEvents(const std::list<MouseEvent>& events,
+                                        const std::string& frame) {
+    return this->DispatchJsMouseEvents(events, frame);
+}
+
+//Status WebViewImpl::DispatchMouseEvents(const std::list<MouseEvent>& events,
+//                                        const std::string& frame) {
+//  for (std::list<MouseEvent>::const_iterator it = events.begin();
+//       it != events.end(); ++it) {
+//    base::DictionaryValue params;
+//    params.SetString("type", GetAsString(it->type));
+//    params.SetInteger("x", it->x);
+//    params.SetInteger("y", it->y);
+//    params.SetInteger("modifiers", it->modifiers);
+//    params.SetString("button", GetAsString(it->button));
+//    params.SetInteger("clickCount", it->click_count);
+//    Status status = client_->SendCommand("Input.dispatchMouseEvent", params);
+//    //Status status = client_->SendCommand("WebkitMouseClick", params);
+//    if (status.IsError())
+//      return status;
+//    if (build_no_ < 1569 && it->button == kRightMouseButton &&
+//        it->type == kReleasedMouseEventType) {
+//      base::ListValue args;
+//      args.AppendInteger(it->x);
+//      args.AppendInteger(it->y);
+//      args.AppendInteger(it->modifiers);
+//      scoped_ptr<base::Value> result;
+//      status = CallFunction(
+//          frame, kDispatchContextMenuEventScript, args, &result);
+//      if (status.IsError())
+//        return status;
+//    }
+//  }
+//  return Status(kOk);
+//}
 
 Status WebViewImpl::SendMouseClickJSONRequestDeprecated(const std::list<MouseEvent>& events) {
    for (std::list<MouseEvent>::const_iterator it = events.begin();

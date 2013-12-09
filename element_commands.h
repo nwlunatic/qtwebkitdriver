@@ -68,8 +68,8 @@ Status ExecuteClickElement(
     const base::DictionaryValue& params,
     scoped_ptr<base::Value>* value);
 
-// Javascript click on the element.
-Status ExecuteJsClickElement(
+// Javascript atom click on the element.
+Status ExecuteAtomClickElement(
     Session* session,
     WebView* web_view,
     const std::string& element_id,

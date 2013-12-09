@@ -88,28 +88,6 @@ Status PrepareCommandLine(int port,
   CommandLine command(program);
   Switches switches;
   
-  // TODO(chrisgao): Add "disable-sync" when chrome 30- is not supported.
-  // For chrome 30-, it leads to crash when opening chrome://settings.
-//  for (size_t i = 0; i < arraysize(kCommonSwitches); ++i)
-//    switches.SetSwitch(kCommonSwitches[i]);
-  /*
-  switches.SetSwitch("disable-hang-monitor");
-  switches.SetSwitch("disable-prompt-on-repost");
-  switches.SetSwitch("full-memory-crash-report");
-  switches.SetSwitch("no-first-run");
-  switches.SetSwitch("disable-background-networking");
-  switches.SetSwitch("disable-web-resources");
-  switches.SetSwitch("safebrowsing-disable-auto-update");
-  switches.SetSwitch("safebrowsing-disable-download-protection");
-  switches.SetSwitch("disable-client-side-phishing-detection");
-  switches.SetSwitch("disable-component-update");
-  switches.SetSwitch("disable-default-apps");
-  switches.SetSwitch("enable-logging");
-  switches.SetSwitch("logging-level", "1");
-  switches.SetSwitch("password-store", "basic");
-  switches.SetSwitch("use-mock-keychain");
-  switches.SetSwitch("remote-debugging-port", base::IntToString(port));
-  */
   switches.SetSwitch("inspect", base::IntToString(port));
   
   for (std::set<std::string>::const_iterator iter =
@@ -120,23 +98,6 @@ Status PrepareCommandLine(int port,
   }
   switches.SetFromSwitches(capabilities.switches);
 
-  /*
-  if (!switches.HasSwitch("user-data-dir")) {
-    command.AppendArg("data:,");
-    if (!user_data_dir->CreateUniqueTempDir())
-      return Status(kUnknownError, "cannot create temp dir for user data dir");
-    switches.SetSwitch("user-data-dir", user_data_dir->path().value());
-    Status status = internal::PrepareUserDataDir(
-        user_data_dir->path(), capabilities.prefs.get(),
-        capabilities.local_state.get());
-    if (status.IsError())
-      return status;
-  }
-
-  if (!extension_dir->CreateUniqueTempDir()) {
-    return Status(kUnknownError,
-                  "cannot create temp dir for unpacking extensions");
-  }*/
   Status status = internal::ProcessExtensions(capabilities.extensions,
                                               extension_dir->path(),
                                               true,

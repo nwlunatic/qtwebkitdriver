@@ -186,6 +186,9 @@ Status ExecuteClickElement(
     events.push_back(
         MouseEvent(kReleasedMouseEventType, kLeftMouseButton,
                    location.x, location.y, session->sticky_modifiers, 1));
+    events.push_back(
+        MouseEvent(kClickedMouseEventType, kLeftMouseButton,
+                   location.x, location.y, session->sticky_modifiers, 1));
     status =
         web_view->DispatchMouseEvents(events, session->GetCurrentFrameId());
     if (status.IsOk())
@@ -194,40 +197,43 @@ Status ExecuteClickElement(
   }
 }
 
-Status ExecuteJsClickElement(
-    Session* session,
-    WebView* web_view,
-    const std::string& element_id,
-    const base::DictionaryValue& params,
-    scoped_ptr<base::Value>* value) {
-  std::string tag_name;
-  Status status = GetElementTagName(session, web_view, element_id, &tag_name);
-  if (status.IsError())
-    return status;
-  if (tag_name == "option") {
-    bool is_toggleable;
-    status = IsOptionElementTogglable(
-        session, web_view, element_id, &is_toggleable);
-    if (status.IsError())
-      return status;
-    if (is_toggleable)
-      return ToggleOptionElement(session, web_view, element_id);
-    else
-      return SetOptionElementSelected(session, web_view, element_id, true);
-  } else {
-    WebPoint location;
-    status = GetElementClickableLocation(
-        session, web_view, element_id, &location);
-    if (status.IsError())
-      return status;
-    
-    base::ListValue arguments;
-    arguments.Append(CreateElement(element_id));
-    
-    return web_view->CallFunction(
-      session->GetCurrentFrameId(), "function(){arguments[0].click();}", arguments, value);
-  }
-}
+//Status ExecuteAtomClickElement(
+//    Session* session,
+//    WebView* web_view,
+//    const std::string& element_id,
+//    const base::DictionaryValue& params,
+//    scoped_ptr<base::Value>* value) {
+//  std::string tag_name;
+//  Status status = GetElementTagName(session, web_view, element_id, &tag_name);
+//  if (status.IsError())
+//    return status;
+//  if (tag_name == "option") {
+//    bool is_toggleable;
+//    status = IsOptionElementTogglable(
+//        session, web_view, element_id, &is_toggleable);
+//    if (status.IsError())
+//      return status;
+//    if (is_toggleable)
+//      return ToggleOptionElement(session, web_view, element_id);
+//    else
+//      return SetOptionElementSelected(session, web_view, element_id, true);
+//  } else {
+//    WebPoint location;
+//    status = GetElementClickableLocation(
+//        session, web_view, element_id, &location);
+//    if (status.IsError())
+//      return status;
+//    
+//    base::ListValue arguments;
+//    arguments.Append(CreateElement(element_id));
+//        
+//    return web_view->CallFunction(
+//      session->GetCurrentFrameId(),
+//      webdriver::atoms::asString(webdriver::atoms::CLICK),
+//      arguments,
+//      value);
+//  }
+//}
 
 Status ExecuteTouchSingleTap(
     Session* session,

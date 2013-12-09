@@ -213,6 +213,8 @@ HttpHandler::HttpHandler(
           kPost,
           "session/:sessionId/element/:id/click",
           WrapToCommand("ClickElement", base::Bind(&ExecuteClickElement))),
+//          WrapToCommand("ClickElement", base::Bind(&ExecuteAtomClickElement))),
+//          WrapToCommand("ClickElement", base::Bind(&SendMouseClickJSONRequestDeprecated))),
       CommandMapping(
           kPost,
           "session/:sessionId/element/:id/clear",

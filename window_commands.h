@@ -132,6 +132,13 @@ Status ExecuteMouseClick(
     const base::DictionaryValue& params,
     scoped_ptr<base::Value>* value);
 
+// Click a mouse button at the coordinates set by the last moveto using JavaScript atom
+Status ExecuteAtomMouseClick(
+    Session* session,
+    WebView* web_view,
+    const base::DictionaryValue& params,
+    scoped_ptr<base::Value>* value);
+
 // Click and hold a mouse button at the coordinates set by the last moveto.
 Status ExecuteMouseButtonDown(
     Session* session,

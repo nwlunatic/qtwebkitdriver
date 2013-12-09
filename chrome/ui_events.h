@@ -13,7 +13,9 @@
 enum MouseEventType {
   kPressedMouseEventType = 0,
   kReleasedMouseEventType,
-  kMovedMouseEventType
+  kMovedMouseEventType,
+  kClickedMouseEventType,
+  kDblClickedMouseEventType
 };
 
 // Specifies the mouse buttons.
