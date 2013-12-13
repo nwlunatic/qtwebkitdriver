@@ -67,6 +67,7 @@ enum KeyEventType {
   kKeyDownEventType = 0,
   kKeyUpEventType,
   kRawKeyDownEventType,
+  kKeyPressEventType,
   kCharEventType
 };
 

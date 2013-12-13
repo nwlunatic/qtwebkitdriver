@@ -48,7 +48,6 @@ function dispatchMouseEvent(type, x, y, modifiers, button, clickCount) {
         relatedTarget: null
     }
 
-//    var event = new MouseEvent(type);
     var event = document.createEvent('MouseEvents');
     event.initMouseEvent(
         options.type,

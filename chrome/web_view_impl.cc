@@ -115,11 +115,16 @@ Status IsNotPendingNavigation(NavigationTracker* tracker,
 const char* GetAsString(KeyEventType type) {
   switch (type) {
     case kKeyDownEventType:
-      return "keyDown";
+//      return "keyDown";
+      return "keydown";
     case kKeyUpEventType:
-      return "keyUp";
+//      return "keyUp";
+      return "keyup";  
     case kRawKeyDownEventType:
-      return "rawKeyDown";
+//      return "rawKeyDown";
+      return "keydown";
+    case kKeyPressEventType:
+      return "keypress";
     case kCharEventType:
       return "char";
     default:
@@ -353,27 +358,49 @@ Status WebViewImpl::DispatchTouchEvents(const std::list<TouchEvent>& events) {
   return Status(kOk);
 }
 
-Status WebViewImpl::DispatchKeyEvents(const std::list<KeyEvent>& events) {
-  for (std::list<KeyEvent>::const_iterator it = events.begin();
+Status WebViewImpl::DispatchJsKeyEvents(const std::list<KeyEvent>& events) {
+    for (std::list<KeyEvent>::const_iterator it = events.begin();
        it != events.end(); ++it) {
-    base::DictionaryValue params;
-    params.SetString("type", GetAsString(it->type));
+    base::ListValue args;
+    args.AppendString(GetAsString(it->type));
+    args.AppendInteger(it->key_code);
+    args.AppendString(it->modified_text);
     if (it->modifiers & kNumLockKeyModifierMask) {
-      params.SetBoolean("isKeypad", true);
-      params.SetInteger("modifiers",
-                        it->modifiers & ~kNumLockKeyModifierMask);
+      args.AppendInteger(it->modifiers & ~kNumLockKeyModifierMask);
     } else {
-      params.SetInteger("modifiers", it->modifiers);
+      args.AppendInteger(it->modifiers);
     }
-    params.SetString("text", it->modified_text);
-    params.SetString("unmodifiedText", it->unmodified_text);
-    params.SetInteger("nativeVirtualKeyCode", it->key_code);
-    params.SetInteger("windowsVirtualKeyCode", it->key_code);
-    Status status = client_->SendCommand("Input.dispatchKeyEvent", params);
+    scoped_ptr<base::Value> result;
+    Status status = CallFunction(
+          "", kDispatchKeyEventScript, args, &result);
     if (status.IsError())
       return status;
   }
   return Status(kOk);
+}
+
+Status WebViewImpl::DispatchKeyEvents(const std::list<KeyEvent>& events) {
+    return DispatchJsKeyEvents(events);
+//  for (std::list<KeyEvent>::const_iterator it = events.begin();
+//       it != events.end(); ++it) {
+//    base::DictionaryValue params;
+//    params.SetString("type", GetAsString(it->type));
+//    if (it->modifiers & kNumLockKeyModifierMask) {
+//      params.SetBoolean("isKeypad", true);
+//      params.SetInteger("modifiers",
+//                        it->modifiers & ~kNumLockKeyModifierMask);
+//    } else {
+//      params.SetInteger("modifiers", it->modifiers);
+//    }
+//    params.SetString("text", it->modified_text);
+//    params.SetString("unmodifiedText", it->unmodified_text);
+//    params.SetInteger("nativeVirtualKeyCode", it->key_code);
+//    params.SetInteger("windowsVirtualKeyCode", it->key_code);
+//    Status status = client_->SendCommand("Input.dispatchKeyEvent", params);
+//    if (status.IsError())
+//      return status;
+//  }
+//  return Status(kOk);
 }
 
 Status WebViewImpl::GetCookies(scoped_ptr<base::ListValue>* cookies) {

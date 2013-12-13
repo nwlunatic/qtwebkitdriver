@@ -171,6 +171,11 @@ KeyEvent CreateKeyDownEvent(ui::KeyboardCode key_code, int modifiers) {
       kRawKeyDownEventType, modifiers, std::string(), std::string(), key_code);
 }
 
+KeyEvent CreateKeyPressedEvent(ui::KeyboardCode key_code, int modifiers) {
+  return KeyEvent(
+      kKeyPressEventType, modifiers, std::string(), std::string(), key_code);
+}
+
 KeyEvent CreateKeyUpEvent(ui::KeyboardCode key_code, int modifiers) {
   return KeyEvent(
       kKeyUpEventType, modifiers, std::string(), std::string(), key_code);
@@ -238,9 +243,10 @@ Status ConvertKeysToKeyEvents(const string16& client_keys,
       } else {
         return Status(kUnknownError, "unknown modifier key");
       }
-      if (modifier_down)
+      if (modifier_down) {
         key_events.push_back(CreateKeyDownEvent(key_code, sticky_modifiers));
-      else
+        key_events.push_back(CreateKeyPressedEvent(key_code, sticky_modifiers));
+      } else
         key_events.push_back(CreateKeyUpEvent(key_code, sticky_modifiers));
       continue;
     }

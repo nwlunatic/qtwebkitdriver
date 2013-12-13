@@ -113,6 +113,7 @@ class WebView {
 
   // Dispatch a sequence of key events.
   virtual Status DispatchKeyEvents(const std::list<KeyEvent>& events) = 0;
+  virtual Status DispatchJsKeyEvents(const std::list<KeyEvent>& events) = 0;
 
   // Return all the cookies visible to the current page.
   virtual Status GetCookies(scoped_ptr<base::ListValue>* cookies) = 0;

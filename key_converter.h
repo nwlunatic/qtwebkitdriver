@@ -16,6 +16,7 @@ class Status;
 
 // Convenience functions for creating |KeyEvent|s. Used by unittests.
 KeyEvent CreateKeyDownEvent(ui::KeyboardCode key_code, int modifiers);
+KeyEvent CreateKeyPressedEvent(ui::KeyboardCode key_code, int modifiers);
 KeyEvent CreateKeyUpEvent(ui::KeyboardCode key_code, int modifiers);
 KeyEvent CreateCharEvent(const std::string& unmodified_text,
                          const std::string& modified_text,
