@@ -247,7 +247,7 @@
         'key_converter.h',
         'keycode_text_conversion.h',
         'keycode_text_conversion_mac.mm',
-        #'keycode_text_conversion_win.cc',
+        'keycode_text_conversion_win.cc',
         'keycode_text_conversion_x.cc',
         'logging.cc',
         'logging.h',
@@ -262,6 +262,24 @@
         'util.h',
         'window_commands.cc',
         'window_commands.h',
+      ],
+      'conditions': [
+        [
+          'OS != "linux"', {
+            'sources!': [
+              'keycode_text_conversion_x.cc',
+            ]
+          }],[
+          'OS != "win"', {
+            'sources!': [
+              'keycode_text_conversion_win.cc', 
+            ]
+          }],[
+          'OS != "mac"', {
+            'sources!': [
+              'keycode_text_conversion_mac.mm',
+            ]
+          }]
       ],
       'actions': [
         {
