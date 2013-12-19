@@ -38,7 +38,7 @@ Status FlattenStringArray(const base::ListValue* src, string16* dest) {
     for (size_t j = 0; j < keys_list_part.size(); ++j) {
       if (CBU16_IS_SURROGATE(keys_list_part[j])) {
         return Status(kUnknownError,
-                      "ChromeDriver only supports characters in the BMP");
+                      "QtWebKitDriver only supports characters in the BMP");
       }
     }
     keys.append(keys_list_part);

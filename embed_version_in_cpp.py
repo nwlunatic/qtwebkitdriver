@@ -30,7 +30,7 @@ def main():
     version += '.' + revision.strip()
 
   global_string_map = {
-      'kChromeDriverVersion': version
+      'kQtWebKitDriverVersion': version
   }
   cpp_source.WriteSource('version',
                          'chrome/test/qtwebkitdriver',

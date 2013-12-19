@@ -72,7 +72,7 @@ scoped_ptr<base::DictionaryValue> CreateCapabilities(Chrome* chrome) {
   scoped_ptr<base::DictionaryValue> caps(new base::DictionaryValue());
   caps->SetString("browserName", "chrome");
   caps->SetString("version", chrome->GetVersion());
-  caps->SetString("chrome.qtwebkitdriverVersion", kChromeDriverVersion);
+  caps->SetString("chrome.qtwebkitdriverVersion", kQtWebKitDriverVersion);
   caps->SetString("platform", chrome->GetOperatingSystemName());
   caps->SetBoolean("javascriptEnabled", true);
   caps->SetBoolean("takesScreenshot", true);

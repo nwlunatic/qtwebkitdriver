@@ -655,7 +655,7 @@ scoped_ptr<net::HttpServerResponseInfo> HttpHandler::PrepareResponseHelper(
     Status full_status(status);
     full_status.AddDetails(base::StringPrintf(
         "Driver info: qtwebkitdriver=%s,platform=%s %s %s",
-        kChromeDriverVersion,
+        kQtWebKitDriverVersion,
         base::SysInfo::OperatingSystemName().c_str(),
         base::SysInfo::OperatingSystemVersion().c_str(),
         base::SysInfo::OperatingSystemArchitecture().c_str()));

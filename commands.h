@@ -21,7 +21,7 @@ class Value;
 struct Session;
 class Status;
 
-// Gets status/info about ChromeDriver.
+// Gets status/info about QtWebKitDriver.
 void ExecuteGetStatus(
     const base::DictionaryValue& params,
     const std::string& session_id,

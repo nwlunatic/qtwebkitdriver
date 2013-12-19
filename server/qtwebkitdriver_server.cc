@@ -143,7 +143,7 @@ void RunServer(int port,
                const std::string& url_base,
                int adb_port,
                scoped_ptr<PortServer> port_server) {
-  base::Thread io_thread("ChromeDriver IO");
+  base::Thread io_thread("QtWebKitDriver IO");
   CHECK(io_thread.StartWithOptions(
       base::Thread::Options(base::MessageLoop::TYPE_IO, 0)));
 
@@ -244,7 +244,7 @@ int main(int argc, char *argv[]) {
     url_base = url_base + "/";
   if (!cmd_line->HasSwitch("silent")) {
     printf(
-        "Starting ChromeDriver (v%s) on port %d\n", kChromeDriverVersion, port);
+        "Starting QtWebKitDriver (v%s) on port %d\n", kQtWebKitDriverVersion, port);
     fflush(stdout);
   }
 
