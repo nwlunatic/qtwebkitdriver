@@ -33,10 +33,6 @@
 #include "net/server/http_server_response_info.h"
 #include "net/socket/tcp_listen_socket.h"
 
-//------------------ delete
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
 namespace {
 
 typedef base::Callback<
