@@ -7,13 +7,28 @@ qtwebkitdriver
 
 # build (from chromium src/)
 
++ prepare chromium environment
++ build driver
+
+###prepare chromium environment (for all OS):
+
 + git checkout 1b618ff654908ed239ab5db8cb5d5a96bc0c0ff5 # (SVN changes up to revision 231775)
 + gclient sync --jobs=16
+
+###build driver (linux):
+
 + git clone https://github.com/nwlunatic/qtwebkitdriver.git chrome/test/qtwebkitdriver
 + ./build/gyp_chromium chrome/test/qtwebkitdriver/qtwebkitdriver.gyp
 + ninja -C out/Release qtwebkitdriver
 
-# debugging (using gdb)
+###build driver (mac os x):
+
++ install Command Line Tools in Xcode in: start Xcode -> Preferences -> Downloads -> Components 
++ git clone https://github.com/nwlunatic/qtwebkitdriver.git chrome/test/qtwebkitdriver
++ GYP_DEFINES=clang=1 ./build/gyp_chromium chrome/test/qtwebkitdriver/qtwebkitdriver.gyp
++ ninja -C out/Release qtwebkitdriver
+
+# debugging on linux (using gdb)
 
 + GYP_DEFINES="debug_extra_cflags=-g" ./build/gyp_chromium chrome/test/qtwebkitdriver/qtwebkitdriver.gyp
 + ninja -C out/Debug qtwebkitdriver
