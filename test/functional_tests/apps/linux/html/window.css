@@ -1,0 +1,56 @@
+#window {
+    position: relative;
+    width: 100%;
+}
+
+#tab {
+    display: block;
+}
+
+#input {
+    display: inline-block;
+}
+
+#button {
+    display: inline-block;
+}
+
+#list {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    overflow: auto;
+    border: solid 1px;
+}
+
+#click_tester {
+    display: inline-block;
+    width: 150px;
+    height: 32px;
+    background: gray;
+}
+
+#result {
+    position: absolute;
+    display: inline-block;
+    top: 0;
+    right: 0;
+    width: 200px;
+    border: solid 2px;
+    word-wrap: break-word;
+}
+
+#drop_field {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border: 1px solid;
+}
+
+#drag_object {
+    position: absolute;
+    top: 0px;
+    width: 32px;
+    height: 32px;
+    background: black;
+}

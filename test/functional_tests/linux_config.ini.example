@@ -1,0 +1,4 @@
+[qtwebkitdriver]
+host: localhost
+port: 9515
+app: /home/pavlov/chromium/src/chrome/test/qtwebkitdriver/test/functional_tests/apps/linux/SampleQtWebKit
