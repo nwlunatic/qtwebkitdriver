@@ -104,7 +104,6 @@ drop_field.ondragover = allowDrop;
 drop_field.ondrop = drop;
 
 function printMouseButton(event) {
-    console.log('test');
     updateResult(event.button);
 }
 
