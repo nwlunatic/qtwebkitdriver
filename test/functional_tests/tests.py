@@ -5,10 +5,13 @@ from contesto.basis.driver_mixin import QtWebkitDriver
 from contesto import config
 
 import platform
+
 if platform.system() == 'Linux':
     config.add_config_file('./linux_config.ini')
 elif platform.system() == 'Darwin':
     config.add_config_file('./mac_config.ini')
+elif platform.system() == 'Windows':
+    config.add_config_file('./win_config.ini')
 else:
     raise Exception('cant define OS you running.')
 
