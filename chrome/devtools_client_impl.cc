@@ -237,6 +237,7 @@ Status DevToolsClientImpl::SendCommandInternal(
   command.SetString("method", method);
   command.Set("params", params.DeepCopy());
   std::string message = SerializeValue(&command);
+  VLOG(1) << "+++ message: " << message;
   if (IsVLogOn(1)) {
     VLOG(1) << "DEVTOOLS COMMAND " << method << " (id=" << command_id << ") "
             << FormatValueForDisplay(params);
@@ -316,7 +317,6 @@ Status DevToolsClientImpl::ProcessNextMessage(
   internal::InspectorEvent event;
   internal::InspectorCommandResponse response;
   if (!parser_func_.Run(message, expected_id, &type, &event, &response)) {
-    LOG(ERROR) << "Bad inspector message: " << message;
     return Status(kUnknownError, "bad inspector message: " + message);
   }
 

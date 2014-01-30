@@ -62,6 +62,7 @@ Status NavigationTracker::IsPendingNavigation(const std::string& frame_id,
       loading_state_ = kLoading;
   }
   VLOG(1) << "*** is loading or pending frames: " << (loading_state_ == kLoading) << " " << (scheduled_frame_set_.count(frame_id) > 0) << " " << (scheduled_frame_set_.size() > 0);
+  // *is_pending = loading_state_ == kLoading;
   *is_pending = loading_state_ == kLoading;
   if (frame_id.empty())
     *is_pending |= scheduled_frame_set_.size() > 0;
@@ -87,8 +88,9 @@ Status NavigationTracker::OnEvent(DevToolsClient* client,
   // When it does, it only sends one stopped event for all frames.
   if (method == "Page.frameStartedLoading") {
     loading_state_ = kLoading;
-//  } else if (method == "Page.frameStoppedLoading") {
-  } else if (method == "Page.loadEventFired") {
+  } else if (method == "Page.frameStoppedLoading") {
+//  } else if (method == "Page.loadEventFired") {
+//  } else if (method == "Page.frameDetached") {
     loading_state_ = kNotLoading;
   } else if (method == "Page.frameScheduledNavigation") {
     double delay;

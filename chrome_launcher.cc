@@ -81,7 +81,7 @@ Status PrepareCommandLine(int port,
       return Status(kUnknownError, "cannot find qt application binary");
   } else if (!base::PathExists(program)) {
     return Status(kUnknownError,
-                  base::StringPrintf("no chrome binary at %" PRFilePath,
+                  base::StringPrintf("no qt application binary at %" PRFilePath,
                                      program.value().c_str()));
   }
 
@@ -237,7 +237,7 @@ Status LaunchDesktopQtApplication(
   base::ProcessHandle process;
   
   if (!base::LaunchProcess(command, options, &process))
-    return Status(kUnknownError, "chrome failed to start");
+    return Status(kUnknownError, "qt application failed to start");
   
   scoped_ptr<DevToolsHttpClient> devtools_client;
   status = WaitForDevToolsAndCheckVersion(
@@ -267,7 +267,7 @@ Status LaunchDesktopQtApplication(
           break;
       }
       return Status(kUnknownError,
-                    "Chrome failed to start: " + termination_reason);
+                    "Qt application failed to start: " + termination_reason);
     }
     if (!base::KillProcess(process, 0, true)) {
       int exit_code;

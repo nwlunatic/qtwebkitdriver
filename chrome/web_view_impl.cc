@@ -195,18 +195,73 @@ Status WebViewImpl::EvaluateScript(const std::string& frame,
       client_.get(), context_id, expression, result);
 }
 
+std::string SpecialSymbolsToUnicode(const std::string s)
+{
+  std::string res;
+  std::string::const_iterator it = s.begin();
+  while (it != s.end()) {
+    char c = *it++;
+	switch (c) {
+	case '<':
+	case '>':
+		res += c; 
+		res += ' ';
+		break;
+	default:
+		res += c;
+		break;
+	}
+  }
+
+  return res;
+}
+
+std::string EscapeSpecialSymbols(const std::string s)
+{
+  std::string res;
+  std::string::const_iterator it = s.begin();
+  while (it != s.end()) {
+	char c = *it++;
+	if (c == '\\') {
+	  VLOG(1) << "found \\";
+	  if (*it == 'u') {
+		VLOG(1) << "found u";
+		std::string character;
+	    character += '\\';
+		character += 'u';
+		character += *it++;
+		character += *it++;
+		character += *it++;
+		character += *it++;
+		VLOG(1) << "+++ char: " << character;
+	  }
+	} else {
+	  res += c;
+	  res += *it;
+	  it++;
+	}
+  }
+
+  return res;
+}
+
 Status WebViewImpl::CallFunction(const std::string& frame,
                                  const std::string& function,
                                  const base::ListValue& args,
                                  scoped_ptr<base::Value>* result) {
   std::string json;
   base::JSONWriter::Write(&args, &json);
+  VLOG(1) << "+++ json: " << json;
   // TODO(zachconrad): Second null should be array of shadow host ids.
+  VLOG(1) << "+++ call function: " << kCallFunctionScript;
   std::string expression = base::StringPrintf(
       "(%s).apply(null, [null, %s, %s])",
       kCallFunctionScript,
       function.c_str(),
       json.c_str());
+
+  expression = SpecialSymbolsToUnicode(expression);
+
   scoped_ptr<base::Value> temp_result;
   Status status = EvaluateScript(frame, expression, &temp_result);
   if (status.IsError())
@@ -633,11 +688,17 @@ Status EvaluateScript(DevToolsClient* client,
                       const std::string& expression,
                       EvaluateScriptReturnType return_type,
                       scoped_ptr<base::DictionaryValue>* result) {
+  base::StringValue* val = new base::StringValue(expression);
+  std::string str;
+  VLOG(1) << "+++ is utf8: " << IsStringUTF8(expression);
+  VLOG(1) << "+++ expression: " << expression;
+  val->GetAsString(&str);
   base::DictionaryValue params;
   params.SetString("expression", expression);
   if (context_id)
     params.SetInteger("contextId", context_id);
   params.SetBoolean("returnByValue", return_type == ReturnByValue);
+  VLOG(1) << "+++ params: " << params;
   scoped_ptr<base::DictionaryValue> cmd_result;
   Status status = client->SendCommandAndGetResult(
       "Runtime.evaluate", params, &cmd_result);
