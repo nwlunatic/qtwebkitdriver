@@ -43,13 +43,17 @@ for example
 ```python
 from selenium.webdriver import Remote
 
-desired_capabilities = {
-	'app': '/path/to/your/qt_application_binary',
-	'appOptions': {
-	  'some_switch',
-	  'another_switch'
-	}
-}
+desired_capabilities: {
+    'app': '/path/to/your/qt_application_binary',
+    'appSwitches': [
+        'some_switch',
+        'another_switch'
+    ],
+    'appPreferences': {
+        'so_pref': 'wow' ,
+        'such_magic': '1'
+    }}
+
 
 driver = Remote(
     command_executor='http://127.0.0.1:9515',
