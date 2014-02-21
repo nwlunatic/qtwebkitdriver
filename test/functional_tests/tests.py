@@ -70,6 +70,7 @@ class KeyActionsTest(QtWebKitTestCase):
         result = self.driver.find_element_by_id('result')
         self.assertEqual('test', result.text)
 
+    @expectedFailure
     def test_copy_paste(self):
         from selenium.webdriver.common.keys import Keys
         _input_div = self.driver.find_element_by_id('input')
