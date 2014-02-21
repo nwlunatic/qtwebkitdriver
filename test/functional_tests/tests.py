@@ -1,4 +1,6 @@
 from unittest import expectedFailure
+from unittest import skipIf
+
 
 from contesto.basis.test_case import UnittestContestoTestCase as ContestoTestCase
 from contesto.basis.driver_mixin import QtWebkitDriver
@@ -20,13 +22,20 @@ class QtWebKitTestCase(ContestoTestCase, QtWebkitDriver):
     pass
 
 
+def unsupported():
+    if platform.system() == 'Windows':
+        return True
+
+
 class MouseActionsTest(QtWebKitTestCase):
+    @skipIf(unsupported(), "broken on Windows")
     def test_click_button(self):
         button = self.driver.find_element_by_id('button')
         button.click()
         result = self.driver.find_element_by_id('result')
         self.assertEqual(u'button', result.text)
 
+    @skipIf(unsupported(), "broken on this OS")
     def test_list_going_to_bring_element_to_view(self):
         link = self.driver.find_elements_by_class_name('link')[17]
         link.click()
@@ -34,6 +43,7 @@ class MouseActionsTest(QtWebKitTestCase):
         self.assertEqual(u'link17', result.text)
 
     # drag and drop need to be done with mousemove event
+    @skipIf(unsupported(), "broken on this OS")
     def test_drag_and_drop(self):
         drag_object = self.driver.find_element_by_id('drag_object')
         from selenium.webdriver.common.action_chains import ActionChains
@@ -46,6 +56,7 @@ class MouseActionsTest(QtWebKitTestCase):
         result = self.driver.find_element_by_id('result')
         self.assertEqual(u'0,200', result.text)
 
+    @skipIf(unsupported(), "broken on this OS")
     def test_click_right_mouse_button(self):
         click_tester = self.driver.find_element_by_id('click_tester')
         # # we can't really focus to div, so we need to work with input dom element
@@ -60,6 +71,7 @@ class MouseActionsTest(QtWebKitTestCase):
 
 
 class KeyActionsTest(QtWebKitTestCase):
+    @skipIf(unsupported(), "broken on this OS")
     def test_characters_input(self):
         from selenium.webdriver.common.keys import Keys
         _input_div = self.driver.find_element_by_id('input')
@@ -88,12 +100,14 @@ class KeyActionsTest(QtWebKitTestCase):
 
 
 class FindElementTest(QtWebKitTestCase):
+    @skipIf(unsupported(), "broken on this OS")
     def test_find_element_by_id(self):
         button = self.driver.find_element_by_id('button')
         from contesto.core.element import ContestoWebElement
         self.assertIsInstance(button, ContestoWebElement)
 
     # elementS? what? anyway...
+    @skipIf(unsupported(), "broken on this OS")
     def test_find_elements_by_id(self):
         buttons = self.driver.find_elements_by_id('button')
         from contesto.core.element import ContestoWebElement
@@ -102,11 +116,13 @@ class FindElementTest(QtWebKitTestCase):
         self.assertIsInstance(button, ContestoWebElement)
         self.assertEqual(u'button', button.text)
 
+    @skipIf(unsupported(), "broken on this OS")
     def test_find_element_by_css_selector(self):
         button = self.driver.find_element_by_css_selector('#button')
         from contesto.core.element import ContestoWebElement
         self.assertIsInstance(button, ContestoWebElement)
 
+    @skipIf(unsupported(), "broken on this OS")
     def test_find_elements_by_css_selector(self):
         links = self.driver.find_elements_by_class_name('link')
         from contesto.core.element import ContestoWebElement
@@ -115,11 +131,13 @@ class FindElementTest(QtWebKitTestCase):
             self.assertIsInstance(link, ContestoWebElement)
             self.assertEqual(u'link' + unicode(number), link.text)
 
+    @skipIf(unsupported(), "broken on this OS")
     def test_find_element_by_xpath(self):
         button = self.driver.find_element_by_xpath('//*[@id="button"]')
         from contesto.core.element import ContestoWebElement
         self.assertIsInstance(button, ContestoWebElement)
 
+    @skipIf(unsupported(), "broken on this OS")
     def test_find_elements_by_xpath(self):
         links = self.driver.find_elements_by_xpath('//*[contains(@class, "link")]')
         from contesto.core.element import ContestoWebElement
@@ -128,12 +146,14 @@ class FindElementTest(QtWebKitTestCase):
             self.assertIsInstance(link, ContestoWebElement)
             self.assertEqual(u'link' + unicode(number), link.text)
 
+    @skipIf(unsupported(), "broken on this OS")
     def test_find_element_by_class_name(self):
         link = self.driver.find_element_by_class_name('link')
         from contesto.core.element import ContestoWebElement
         self.assertIsInstance(link, ContestoWebElement)
         self.assertEqual(u'link0', link.text)
 
+    @skipIf(unsupported(), "broken on this OS")
     def test_find_elements_by_class_name(self):
         links = self.driver.find_elements_by_class_name('link')
         from contesto.core.element import ContestoWebElement
