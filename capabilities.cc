@@ -21,6 +21,8 @@
 #include "chrome/test/qtwebkitdriver/logging.h"
 #include "net/base/net_util.h"
 
+#include <iostream>
+
 namespace {
 
 typedef base::Callback<Status(const base::Value&, Capabilities*)> Parser;
@@ -98,13 +100,24 @@ Status ParseSwitches(const base::Value& option,
   return Status(kOk);
 }
 
-//Status ParsePrefs(const base::Value& option, Capabilities* capabilities) {
-//  const base::DictionaryValue* prefs = NULL;
-//  if (!option.GetAsDictionary(&prefs))
-//    return Status(kUnknownError, "'prefs' must be a dictionary");
+Status ParsePrefs(const base::Value& option, Capabilities* capabilities) {
+  const base::DictionaryValue* prefs = NULL;
+  if (!option.GetAsDictionary(&prefs))
+    return Status(kUnknownError, "'prefs' must be a dictionary");
+  VLOG(1) << *prefs;
+  base::DictionaryValue::Iterator it = base::DictionaryValue::Iterator(*prefs);
+  while(!it.IsAtEnd()) {
+    VLOG(1) << it.key() << ": " << it.value();
+    std::string value;
+    if (!prefs->GetString(it.key(), &value))
+        return Status(kUnknownError, "each preference value must be a string");
+    capabilities->switches.SetSwitch(it.key(), value);
+    it.Advance();
+  }
 //  capabilities->prefs.reset(prefs->DeepCopy());
-//  return Status(kOk);
-//}
+  return Status(kOk);
+}
+
 //
 //Status ParseLocalState(const base::Value& option, Capabilities* capabilities) {
 //  const base::DictionaryValue* local_state = NULL;
@@ -441,9 +454,9 @@ Status Capabilities::Parse(const base::DictionaryValue& desired_caps) {
     
   std::map<std::string, Parser> parser_map;
   parser_map["app"] = base::Bind(&ParseFilePath, &this->binary);
-  parser_map["appOptions"] = base::Bind(&ParseSwitches);
-//  parser_map["loggingPrefs"] = base::Bind(&ParseLoggingPrefs);
-  parser_map["proxy"] = base::Bind(&ParseProxy);
+  parser_map["appSwitches"] = base::Bind(&ParseSwitches);
+  parser_map["appPreferences"] = base::Bind(&ParsePrefs);
+//  parser_map["proxy"] = base::Bind(&ParseProxy);
   for (std::map<std::string, Parser>::iterator it = parser_map.begin();
        it != parser_map.end(); ++it) {
     const base::Value* capability = NULL;
