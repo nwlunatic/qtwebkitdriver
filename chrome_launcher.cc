@@ -78,10 +78,10 @@ Status PrepareCommandLine(int port,
     //if (!FindChrome(&program))
     if (!FindQtApplication(&program))
       //return Status(kUnknownError, "cannot find Chrome binary");
-      return Status(kUnknownError, "cannot find qt application binary");
+      return Status(kUnknownError, "cannot find Qt application binary");
   } else if (!base::PathExists(program)) {
     return Status(kUnknownError,
-                  base::StringPrintf("no chrome binary at %" PRFilePath,
+                  base::StringPrintf("no such Qt application binary: %" PRFilePath,
                                      program.value().c_str()));
   }
 
@@ -188,7 +188,7 @@ Status LaunchExistingChromeSession(
       capabilities.debugger_address, context_getter, socket_factory,
       &devtools_client);
   if (status.IsError()) {
-    return Status(kUnknownError, "cannot connect to chrome at " +
+    return Status(kUnknownError, "cannot connect to Qt application at " +
                       capabilities.debugger_address.ToString(),
                   status);
   }
@@ -237,7 +237,7 @@ Status LaunchDesktopQtApplication(
   base::ProcessHandle process;
   
   if (!base::LaunchProcess(command, options, &process))
-    return Status(kUnknownError, "chrome failed to start");
+    return Status(kUnknownError, "Qt application failed to start");
   
   scoped_ptr<DevToolsHttpClient> devtools_client;
   status = WaitForDevToolsAndCheckVersion(
@@ -267,13 +267,13 @@ Status LaunchDesktopQtApplication(
           break;
       }
       return Status(kUnknownError,
-                    "Chrome failed to start: " + termination_reason);
+                    "Qt application failed to start: " + termination_reason);
     }
     if (!base::KillProcess(process, 0, true)) {
       int exit_code;
       if (base::GetTerminationStatus(process, &exit_code) ==
           base::TERMINATION_STATUS_STILL_RUNNING)
-        return Status(kUnknownError, "cannot kill Chrome", status);
+        return Status(kUnknownError, "cannot kill Qt application", status);
     }
     return status;
   }
@@ -376,7 +376,7 @@ Status LaunchQtApplication(
   else
     port_status = port_manager->ReservePort(&port, &port_reservation);
   if (port_status.IsError())
-    return Status(kUnknownError, "cannot reserve port for App", port_status);
+    return Status(kUnknownError, "cannot reserve port for Qt application", port_status);
 
 //  if (capabilities.IsAndroid()) {
 //    return LaunchAndroidChrome(context_getter,
