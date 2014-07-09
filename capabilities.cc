@@ -104,10 +104,8 @@ Status ParsePrefs(const base::Value& option, Capabilities* capabilities) {
   const base::DictionaryValue* prefs = NULL;
   if (!option.GetAsDictionary(&prefs))
     return Status(kUnknownError, "'prefs' must be a dictionary");
-  VLOG(1) << *prefs;
   base::DictionaryValue::Iterator it = base::DictionaryValue::Iterator(*prefs);
   while(!it.IsAtEnd()) {
-    VLOG(1) << it.key() << ": " << it.value();
     std::string value;
     if (!prefs->GetString(it.key(), &value))
         return Status(kUnknownError, "each preference value must be a string");
