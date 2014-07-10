@@ -145,7 +145,7 @@ Status InitSessionHelper(
   status = session->chrome->GetWebViewIds(&web_view_ids);
   if (status.IsError() || web_view_ids.empty()) {
     return status.IsError() ? status :
-        Status(kUnknownError, "unable to discover open window in chrome");
+        Status(kUnknownError, "unable to discover open window in Qt application");
   }
 
   session->window = web_view_ids.front();
